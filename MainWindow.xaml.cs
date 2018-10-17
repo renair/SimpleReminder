@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SimpleReminder.Data;
 using SimpleReminder.Screens;
+using SimpleReminder.Controlls;
 
 namespace SimpleReminder
 {
@@ -27,6 +28,13 @@ namespace SimpleReminder
         public MainWindow()
         {
             InitializeComponent();
+            LoginScreen loginScreen = new LoginScreen();
+            loginScreen.LoginDone += UserLoggedIn;
+            contentControl.Content = loginScreen;
+        }
+
+        private void UserLoggedIn()
+        {
             contentControl.Content = new MainScreen();
         }
     }

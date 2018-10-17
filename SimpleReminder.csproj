@@ -54,6 +54,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Screens\LoginScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Screens\MainScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -67,6 +71,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Data\ReminderData.cs" />
+    <Compile Include="Screens\LoginScreen.xaml.cs">
+      <DependentUpon>LoginScreen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Screens\MainScreen.xaml.cs">
       <DependentUpon>MainScreen.xaml</DependentUpon>
     </Compile>
@@ -74,13 +81,13 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="NotificationControll.xaml">
+    <Page Include="Controlls\NotificationControll.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NotificationControll.xaml.cs">
+    <Compile Include="Controlls\NotificationControll.xaml.cs">
       <DependentUpon>NotificationControll.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">

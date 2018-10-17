@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SimpleReminder.Data;
 
-namespace SimpleReminder
+namespace SimpleReminder.Controlls
 {
     /// <summary>
     /// Логика взаимодействия для Notification.xaml
