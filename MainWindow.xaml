@@ -8,25 +8,8 @@
         Title="Remindings" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10px"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="0.35*"/>
-            <RowDefinition Height="0.2*"/>
-            <RowDefinition Height="0.35*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="10px"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="10px"/>
-            <ColumnDefinition Width="0.3*"/>
-            <ColumnDefinition Width="0.02*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="10px"/>
-        </Grid.ColumnDefinitions>
-        <Button Grid.Column="1" Grid.Row="2" Content="Add" FontSize="30" FontWeight="DemiBold" Name="AddButton" Click="AddButtonClick"/>
-        <Button Grid.Column="1" Grid.Row="4" Content="Delete" FontSize="30" FontWeight="DemiBold" Name="DeleteButton"/>
-        <ScrollViewer Grid.Column="3" Grid.Row="1" Grid.RowSpan="5">
-            <StackPanel Name="NotificationsContainer"/>
-        </ScrollViewer>
+        <ContentControl Name="contentControl" Grid.Row="0"/>
     </Grid>
 </Window>

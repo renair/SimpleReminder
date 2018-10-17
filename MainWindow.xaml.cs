@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SimpleReminder.Data;
+using SimpleReminder.Screens;
 
 namespace SimpleReminder
 {
@@ -26,18 +27,7 @@ namespace SimpleReminder
         public MainWindow()
         {
             InitializeComponent();
-        }
-
-        private void AddButtonClick(object sender, RoutedEventArgs e)
-        {
-            ReminderData data = new ReminderData();
-            data.SelectedDate = DateTime.Now.AddHours(1);
-            data.ReminderText = "This is test!";
-            NotificationControll ctrl = new NotificationControll(data);
-            //remindings.Add(data, ctrl);
-            //int i = remindings.IndexOfKey(data);
-            //NotificationsContainer.Children.Insert(i, ctrl);
-            NotificationsContainer.Children.Add(ctrl);
+            contentControl.Content = new MainScreen();
         }
     }
 }
