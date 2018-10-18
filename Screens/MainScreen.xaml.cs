@@ -22,6 +22,8 @@ namespace SimpleReminder.Screens
     /// </summary>
     public partial class MainScreen : UserControl
     {
+        private SortedList<ReminderData, NotificationControll> remindings = new SortedList<ReminderData, NotificationControll>();
+
         public MainScreen()
         {
             InitializeComponent();
@@ -33,10 +35,30 @@ namespace SimpleReminder.Screens
             data.SelectedDate = DateTime.Now.AddHours(1);
             data.ReminderText = "This is test!";
             NotificationControll ctrl = new NotificationControll(data);
+            ctrl.RequiringSettings += ChangeNotification;
             //remindings.Add(data, ctrl);
             //int i = remindings.IndexOfKey(data);
             //NotificationsContainer.Children.Insert(i, ctrl);
             NotificationsContainer.Children.Add(ctrl);
+        }
+
+        private void ChangeNotification(ReminderData d)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void RedrawRemindings()
+        {
+            NotificationsContainer.Children.Clear();
+            foreach(NotificationControll ctrl in remindings.Values)
+            {
+                NotificationsContainer.Children.Add(ctrl);
+            }
+        }
+
+        private void ReorderButtonClick(object sender, RoutedEventArgs e)
+        {
+            RedrawRemindings();
         }
     }
 }

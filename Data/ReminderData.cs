@@ -47,6 +47,18 @@ namespace SimpleReminder.Data
             }
         }
 
+        // Make initialization to safe using without NullReferenceException.
+        public ReminderData()
+        {
+            selectedDate = DateTime.Now;
+        }
+
+        public ReminderData(Int64 id)
+        {
+            selectedDate = DateTime.Now;
+            this.id = id;
+        }
+
         public int Compare(ReminderData a, ReminderData b)
         {
             return (int)(a.selectedDate - b.selectedDate).TotalMinutes;

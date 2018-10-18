@@ -5,31 +5,48 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SimpleReminder"
              mc:Ignorable="d" 
-             d:DesignHeight="60" d:DesignWidth="800"
-             Height="60">
+             d:DesignHeight="150" d:DesignWidth="800"
+             MinHeight="100" MaxHeight="200"
+             MinWidth="600">
     <Grid>
-        <!-- Grid size definition -->
+        <!-- Define base grid for whole Controll -->
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.1*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="0.1*"/>
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.015*"/>
-            <ColumnDefinition Width="0.3*"/>
-            <ColumnDefinition Width="0.03*"/>
-            <ColumnDefinition Width="0.15*"/>
-            <ColumnDefinition Width="0.03*"/>
-            <ColumnDefinition Width="0.15*"/>
-            <ColumnDefinition Width="0.03*"/>
-            <ColumnDefinition Width="0.6*"/>
-            <ColumnDefinition Width="0.03*"/>
+            <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <!-- Elements definition -->
-        <DatePicker Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Name="DatePicker"/>
-        <ComboBox Grid.Column="3" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Name="HoursPicker"/>
-        <Label Grid.Column="4" Grid.Row="1" Content=":" Margin="0,-7,0,0" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <ComboBox Grid.Column="5" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Name="MinutesPicker"/>
-        <TextBox Grid.Column="7" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Name="NotificationMessage"/>
+        <!-- Put Button to base Grid. When user click - Button will produce
+             event to open editing screen -->
+        <Button Grid.Column="0" Grid.Row="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="Transparent"
+                Name="MainButton" Click="ButtonClick"
+                MouseDown="MainButtonMouseDown"> <!-- Test case, using to emulate situation when time has come. -->
+            <Grid>
+                <!-- Grid where information about notification will display -->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.1*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="0.1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.015*"/>
+                    <ColumnDefinition Width="0.45*"/>
+                    <ColumnDefinition Width="0.03*"/>
+                    <ColumnDefinition Width="0.12*"/>
+                    <ColumnDefinition Width="17px"/>
+                    <ColumnDefinition Width="0.12*"/>
+                    <ColumnDefinition Width="0.03*"/>
+                    <ColumnDefinition Width="0.6*"/>
+                    <ColumnDefinition Width="0.03*"/>
+                </Grid.ColumnDefinitions>
+                <!-- Notification elements definition -->
+                <Label Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="35" FontWeight="DemiBold" Name="DateLabel" Content="27/01/2020"/>
+                <Label Grid.Column="3" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="35" FontWeight="DemiBold"  Name="HoursLabel" Content="00"/>
+                <Label Grid.Column="4" Grid.Row="1" Content=":" Margin="0,-7,0,0" FontSize="35" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Label Grid.Column="5" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="35" FontWeight="DemiBold"  Name="MinutesLabel" Content="00"/>
+                <TextBox Grid.Column="7" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Name="NotificationMessage" VerticalScrollBarVisibility="Auto"
+                 TextWrapping="Wrap" AcceptsReturn="True" Text="JustTest" FontSize="20"/>
+            </Grid>
+        </Button>
     </Grid>
 </UserControl>

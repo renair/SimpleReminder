@@ -23,8 +23,6 @@ namespace SimpleReminder
     /// </summary>
     public partial class MainWindow : Window
     {
-        private SortedList<ReminderData, NotificationControll> remindings = new SortedList<ReminderData, NotificationControll>();
-
         public MainWindow()
         {
             InitializeComponent();
