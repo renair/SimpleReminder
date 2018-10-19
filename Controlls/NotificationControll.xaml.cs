@@ -49,7 +49,7 @@ namespace SimpleReminder.Controlls
             DisplayDate();
         }
 
-        private void DisplayDate()
+        public void DisplayDate()
         {
             DateTime t = reminderData.SelectedDate;
             DateLabel.Content = t.ToShortDateString();
@@ -67,7 +67,7 @@ namespace SimpleReminder.Controlls
             }
         }
 
-        private void ButtonClick(object sender, RoutedEventArgs e)
+        private void MainButtonClick(object sender, RoutedEventArgs e)
         {
             if(reminderData.isTimeCome())
             {

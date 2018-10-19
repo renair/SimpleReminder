@@ -19,7 +19,7 @@
         <!-- Put Button to base Grid. When user click - Button will produce
              event to open editing screen -->
         <Button Grid.Column="0" Grid.Row="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="Transparent"
-                Name="MainButton" Click="ButtonClick"
+                Name="MainButton" Click="MainButtonClick"
                 MouseDown="MainButtonMouseDown"> <!-- Test case, using to emulate situation when time has come. -->
             <Grid>
                 <!-- Grid where information about notification will display -->

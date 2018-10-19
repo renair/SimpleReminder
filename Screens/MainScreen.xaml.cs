@@ -22,7 +22,7 @@ namespace SimpleReminder.Screens
     /// </summary>
     public partial class MainScreen : UserControl
     {
-        private SortedList<ReminderData, NotificationControll> remindings = new SortedList<ReminderData, NotificationControll>();
+        private List<NotificationControll> remindings = new List<NotificationControll>();
 
         public MainScreen()
         {
@@ -36,29 +36,38 @@ namespace SimpleReminder.Screens
             data.ReminderText = "This is test!";
             NotificationControll ctrl = new NotificationControll(data);
             ctrl.RequiringSettings += ChangeNotification;
-            //remindings.Add(data, ctrl);
-            //int i = remindings.IndexOfKey(data);
-            //NotificationsContainer.Children.Insert(i, ctrl);
-            NotificationsContainer.Children.Add(ctrl);
+            ctrl.NotificationOutdated += (notif) => {
+                NotificationsContainer.Children.Remove(ctrl);
+                remindings.Remove(ctrl);
+            };
+            remindings.Add(ctrl);
+            RedrawRemindings();
         }
 
         private void ChangeNotification(ReminderData d)
         {
-            throw new NotImplementedException();
+            Canvas.SetZIndex(NotificationEditor, 1);
+            NotificationScreen editor = new NotificationScreen(d);
+            editor.ScreenClosing += OnNotificationEdited;
+            NotificationEditorContentControll.Content = editor;
+        }
+
+        private void OnNotificationEdited()
+        {
+            Canvas.SetZIndex(NotificationEditor, -1);
+            NotificationEditorContentControll.Content = null;
+            RedrawRemindings();
         }
 
         private void RedrawRemindings()
         {
+            remindings.Sort((obj, obj1) => { return obj.ReminderData.Compare(obj.ReminderData, obj1.ReminderData); });
             NotificationsContainer.Children.Clear();
-            foreach(NotificationControll ctrl in remindings.Values)
+            foreach (NotificationControll ctrl in remindings)
             {
+                ctrl.DisplayDate();
                 NotificationsContainer.Children.Add(ctrl);
             }
-        }
-
-        private void ReorderButtonClick(object sender, RoutedEventArgs e)
-        {
-            RedrawRemindings();
         }
     }
 }

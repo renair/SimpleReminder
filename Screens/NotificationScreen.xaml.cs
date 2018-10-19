@@ -37,6 +37,10 @@ namespace SimpleReminder.Screens
             }
         }
 
+        public delegate void SimpleEvent();
+
+        public event SimpleEvent ScreenClosing;
+
         public NotificationScreen()
         {
             MakeInitialization();
@@ -57,10 +61,10 @@ namespace SimpleReminder.Screens
 
         private void InitializeTimePickers()
         {
-            for (int i = 0; i <= 60; ++i)
+            for (int i = 0; i < 60; ++i)
             {
                 string s = i.ToString();
-                if (i <= 24)
+                if (i < 24)
                 {
                     HoursPicker.Items.Add(s.PadLeft(2, '0'));
                 }
@@ -101,6 +105,11 @@ namespace SimpleReminder.Screens
         private void NotificationMessageTextChanged(object sender, TextChangedEventArgs e)
         {
             reminderData.ReminderText = NotificationMessage.Text;
+        }
+
+        private void CloseButtonClick(object sender, RoutedEventArgs e)
+        {
+            ScreenClosing?.Invoke();
         }
     }
 }
