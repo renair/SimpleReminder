@@ -26,6 +26,7 @@ namespace SimpleReminder.Controlls
 
         public event PassingData RequiringSettings;
         public event ObjectChanged NotificationOutdated;
+        public event ObjectChanged ReadyToRemove;
 
         private ReminderData reminderData;
 
@@ -61,9 +62,11 @@ namespace SimpleReminder.Controlls
 
         public void Update()
         {
-            if(reminderData.isTimeCome())
+            //TODO replace it with normal code
+            if(reminderData.isTimeCome() && MainButton.Background != Brushes.Red)
             {
                 MainButton.Background = Brushes.Red;
+                NotificationOutdated?.Invoke(this);
             }
         }
 
@@ -71,7 +74,7 @@ namespace SimpleReminder.Controlls
         {
             if(reminderData.isTimeCome())
             {
-                NotificationOutdated?.Invoke(this);
+                ReadyToRemove?.Invoke(this);
                 return;
             }
             RequiringSettings?.Invoke(reminderData);
@@ -83,7 +86,6 @@ namespace SimpleReminder.Controlls
             {
                 reminderData.SelectedDate = DateTime.Now;
                 DisplayDate();
-                Update();
             }
             e.Handled = true;
         }

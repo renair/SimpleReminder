@@ -17,22 +17,22 @@
             <RowDefinition Height="0.15*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.1*"/>
-            <ColumnDefinition Width="0.1*"/>
+            <ColumnDefinition Width="0.2*"/>
             <ColumnDefinition Width="0.5*"/>
             <ColumnDefinition Width="0.25*"/>
             <ColumnDefinition Width="0.05*"/>
             <ColumnDefinition Width="0.25*"/>
             <ColumnDefinition Width="0.2*"/>
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="0" Grid.Row="0" BorderThickness="0" Background="Snow" FontSize="22" Content="&lt;-" Click="CloseButtonClick" />
-        <DatePicker Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Name="DatePicker" SelectedDateChanged="DatePickerSelectedDateChanged"/>
-        <ComboBox Grid.Column="3" Grid.Row="1" HorizontalAlignment="Stretch" Name="HoursPicker" SelectionChanged="HoursPickerSelectionChanged"/>
-        <Label Grid.Column="4" Grid.Row="1" Content=":" Margin="0,-7,0,0" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <ComboBox Grid.Column="5" Grid.Row="1" HorizontalAlignment="Stretch" Name="MinutesPicker" SelectionChanged="MinutesPickerSelectionChanged"/>
-        <TextBox Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="4" BorderThickness="2" Name="NotificationMessage" TextChanged="NotificationMessageTextChanged"
-                 AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
-        <Button Grid.Column="2" Grid.Row="5" Content="Delete" Name="DeleteButton"/>
-        <Button Grid.Column="3" Grid.Row="5" Grid.ColumnSpan="3" Content="Save" Name="SaveButton"/>
+        <DatePicker Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" FontSize="22"
+                    Name="DatePicker" SelectedDateChanged="DatePickerSelectedDateChanged"/>
+        <ComboBox Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                  FontSize="35" FontWeight="Bold" Name="HoursPicker" SelectionChanged="HoursPickerSelectionChanged"/>
+        <Label Grid.Column="3" Grid.Row="1" Content=":" Margin="0,-7,0,0" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <ComboBox Grid.Column="4" Grid.Row="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                  FontSize="35"  FontWeight="Bold" Name="MinutesPicker" SelectionChanged="MinutesPickerSelectionChanged"/>
+        <TextBox Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="4" BorderThickness="2" FontSize="20"
+                 Name="NotificationMessage" TextChanged="NotificationMessageTextChanged" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+        <Button Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="4" Content="Save" FontWeight="DemiBold" FontSize="25" Name="SaveButton" Click="SaveButtonClick"/>
     </Grid>
 </UserControl>

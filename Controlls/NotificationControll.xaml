@@ -45,7 +45,7 @@
                 <Label Grid.Column="4" Grid.Row="1" Content=":" Margin="0,-7,0,0" FontSize="35" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <Label Grid.Column="5" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="35" FontWeight="DemiBold"  Name="MinutesLabel" Content="00"/>
                 <TextBox Grid.Column="7" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Name="NotificationMessage" VerticalScrollBarVisibility="Auto"
-                 TextWrapping="Wrap" AcceptsReturn="True" Text="JustTest" FontSize="20"/>
+                 TextWrapping="Wrap" AcceptsReturn="True" FontSize="20" IsReadOnly="True"/>
             </Grid>
         </Button>
     </Grid>

@@ -32,17 +32,14 @@ namespace SimpleReminder.Screens
 
         private void loginButton_Click(object sender, RoutedEventArgs e)
         {
-            // TODO Chek if user exists
-            if(loginBox.Text != "andrew" && passwordBox.Password != "andrew")
+            // TODO Replace with user authorization
+            if(loginBox.Text != "andrew" || passwordBox.Password != "andrew")
             {
                 MessageBox.Show("Password: andrew\nLogin: andrew");
                 return;
             }
             //If user exists and password is correct
-            if(LoginDone != null)
-            {
-                LoginDone();
-            }
+            LoginDone?.Invoke();
         }
     }
 }

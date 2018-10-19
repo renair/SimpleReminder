@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SimpleReminder.Data;
 using SimpleReminder.Controlls;
+using System.Windows.Threading;
 
 namespace SimpleReminder.Screens
 {
@@ -27,20 +28,42 @@ namespace SimpleReminder.Screens
         public MainScreen()
         {
             InitializeComponent();
+            //TODO do it in another function
+            DispatcherTimer t = new DispatcherTimer
+            {
+                Interval = new TimeSpan(0, 0, 15) //every 15 seconds
+            };
+            t.Tick += TimerTicked;
+            t.Start();
+        }
+
+        private void TimerTicked(object sender, EventArgs e)
+        {
+            RedrawRemindings();
         }
 
         private void AddButtonClick(object sender, RoutedEventArgs e)
         {
             ReminderData data = new ReminderData();
             data.SelectedDate = DateTime.Now.AddHours(1);
-            data.ReminderText = "This is test!";
+            data.ReminderText = "";
             NotificationControll ctrl = new NotificationControll(data);
             ctrl.RequiringSettings += ChangeNotification;
-            ctrl.NotificationOutdated += (notif) => {
-                NotificationsContainer.Children.Remove(ctrl);
-                remindings.Remove(ctrl);
+            ctrl.NotificationOutdated += (obj) => {
+                RedrawRemindings();
             };
-            remindings.Add(ctrl);
+            // TODO do something with it!
+            ctrl.ReadyToRemove += (notif) => {
+                NotificationsContainer.Children.Remove(ctrl);
+                lock(remindings)
+                {
+                    remindings.Remove(ctrl);
+                }
+            };
+            lock(remindings)
+            {
+                remindings.Add(ctrl);
+            }
             RedrawRemindings();
         }
 
@@ -61,12 +84,16 @@ namespace SimpleReminder.Screens
 
         private void RedrawRemindings()
         {
-            remindings.Sort((obj, obj1) => { return obj.ReminderData.Compare(obj.ReminderData, obj1.ReminderData); });
-            NotificationsContainer.Children.Clear();
-            foreach (NotificationControll ctrl in remindings)
+            lock(remindings)
             {
-                ctrl.DisplayDate();
-                NotificationsContainer.Children.Add(ctrl);
+                //TODO implement comparing
+                remindings.Sort((obj, obj1) => { return obj.ReminderData.Compare(obj.ReminderData, obj1.ReminderData); });
+                NotificationsContainer.Children.Clear();
+                foreach (NotificationControll ctrl in remindings.ToArray())
+                {
+                    ctrl.DisplayDate();
+                    NotificationsContainer.Children.Add(ctrl);
+                }
             }
         }
     }

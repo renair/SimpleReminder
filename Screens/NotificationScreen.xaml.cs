@@ -107,7 +107,7 @@ namespace SimpleReminder.Screens
             reminderData.ReminderText = NotificationMessage.Text;
         }
 
-        private void CloseButtonClick(object sender, RoutedEventArgs e)
+        private void SaveButtonClick(object sender, RoutedEventArgs e)
         {
             ScreenClosing?.Invoke();
         }
