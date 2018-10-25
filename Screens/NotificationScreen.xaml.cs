@@ -37,9 +37,10 @@ namespace SimpleReminder.Screens
             }
         }
 
-        public delegate void SimpleEvent();
+        public delegate void ObjChanged(NotificationScreen s);
 
-        public event SimpleEvent ScreenClosing;
+        public event ObjChanged SaveRequired;
+        public event ObjChanged RemoveRequired;
 
         public NotificationScreen()
         {
@@ -109,7 +110,12 @@ namespace SimpleReminder.Screens
 
         private void SaveButtonClick(object sender, RoutedEventArgs e)
         {
-            ScreenClosing?.Invoke();
+            SaveRequired?.Invoke(this);
+        }
+
+        private void RemoveButtonClick(object sender, RoutedEventArgs e)
+        {
+            RemoveRequired?.Invoke(this);
         }
     }
 }

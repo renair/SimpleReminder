@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace SimpleReminder.Data
 {
-    public class ReminderData : IComparer<ReminderData>
+    public class ReminderData : IComparable
     {
         // Private parts with data
         private Int64 id;
@@ -59,9 +58,14 @@ namespace SimpleReminder.Data
             this.id = id;
         }
 
-        public int Compare(ReminderData a, ReminderData b)
+        public int CompareTo(object obj)
         {
-            return (int)(a.selectedDate - b.selectedDate).TotalMinutes;
+            if (obj != null && obj is ReminderData)
+            {
+                ReminderData r = (ReminderData)obj;
+                return (int)(this.selectedDate - r.selectedDate).TotalMinutes;
+            }
+            throw new Exception();
         }
 
         public bool isTimeCome()

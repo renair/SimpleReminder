@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SimpleReminder"
         mc:Ignorable="d"
-        Title="Remindings" Height="450" Width="900"
+        Title="Remindings" Height="600" Width="900"
         MinHeight="440" MinWidth="900">
     <Grid>
         <Grid.RowDefinitions>
