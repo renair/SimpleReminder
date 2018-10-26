@@ -28,7 +28,7 @@ namespace SimpleReminder.Screens
         public MainScreen()
         {
             InitializeComponent();
-            //TODO do it in another function
+            // Setup Timer to update controlls
             DispatcherTimer t = new DispatcherTimer
             {
                 Interval = new TimeSpan(0, 0, 1) //every second
@@ -39,7 +39,17 @@ namespace SimpleReminder.Screens
 
         private void TimerTicked(object sender, EventArgs e)
         {
-            RedrawRemindings();
+            // lock remindings to grant tht we use it personaly
+            lock(remindings)
+            {
+                // Iterate over controlls and update if TimeIsCome()
+                // Consider all remindings already sorted.
+                for(int i = 0; i < remindings.Count && remindings.Keys.ElementAt(i).isTimeCome(); ++i)
+                {
+                    var  k = remindings.Keys.ElementAt(i);
+                    remindings[k].DisplayDate();
+                }
+            }
         }
 
         private void AddButtonClick(object sender, RoutedEventArgs e)
@@ -87,9 +97,9 @@ namespace SimpleReminder.Screens
         {
             try
             {
-                NotificationsContainer.Children.Remove(ctrl);
                 lock (remindings)
                 {
+                    NotificationsContainer.Children.Remove(ctrl);
                     remindings.Remove(ctrl.ReminderData);
                 }
             }
@@ -166,14 +176,17 @@ namespace SimpleReminder.Screens
                     {
                         // Update controll because it can be outdated or have changed data
                         ctrl.DisplayDate();
-                        NotificationsContainer.Children.Add(ctrl);
+                        if (!NotificationsContainer.Children.Contains(ctrl))
+                        {
+                            NotificationsContainer.Children.Add(ctrl);
+                        }
                     }
                 }
-                catch(ArgumentNullException)
+                    catch (ArgumentNullException)
                 {
                     MessageBox.Show("Some data were lost. Can't order remindings.");
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show("Unexpected exception on redrawing! \nMessage: " + ex.Message);
                 }
