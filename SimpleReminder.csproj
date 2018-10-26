@@ -54,6 +54,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataAccess\UserAccess.cs" />
+    <Compile Include="Data\UserData.cs" />
     <Compile Include="Screens\NotificationScreen.xaml.cs">
       <DependentUpon>NotificationScreen.xaml</DependentUpon>
     </Compile>

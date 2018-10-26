@@ -31,7 +31,7 @@ namespace SimpleReminder.Screens
             //TODO do it in another function
             DispatcherTimer t = new DispatcherTimer
             {
-                Interval = new TimeSpan(0, 1, 0) //every second
+                Interval = new TimeSpan(0, 0, 1) //every second
             };
             t.Tick += TimerTicked;
             t.Start();
@@ -52,31 +52,9 @@ namespace SimpleReminder.Screens
             NotificationControll ctrl = new NotificationControll(data);
             // Set some handlers for this controll
             ctrl.RequiringSettings += ChangeNotification;
-            ctrl.NotificationOutdated += (obj) => {
-                ReminderData d = obj.ReminderData;
-                try
-                {
-                    // This will update exactly one controll
-                    // instead of redrawing all.
-                    //remindings[d].DisplayDate();
-
-                    // Redraw remindings because we are able to outdate random notification
-                    // In release version notification will be already sorted and we can use code above.
-                    RedrawRemindings();
-                }
-                catch(Exception ex)
-                {
-                    MessageBox.Show("Some data were lost. Can't update reminding controll.\nMessage: " + ex.Message);
-                }
-            };
-            // TODO do something with it!
-            ctrl.ReadyToRemove += (notif) => {
-                NotificationsContainer.Children.Remove(ctrl);
-                lock(remindings)
-                {
-                    remindings.Remove(data);
-                }
-            };
+            ctrl.NotificationOutdated += OnNotificationOutdated;
+            // Remove notification controll when time come
+            ctrl.ReadyToRemove += OnReadyToRemove;
             // Add data and controll to Dictionary for redrawing, etc.
             lock(remindings)
             {
@@ -84,6 +62,45 @@ namespace SimpleReminder.Screens
             }
             // Redraw all existing Notifications included created one.
             RedrawRemindings();
+        }
+
+        private void OnNotificationOutdated(NotificationControll ctrl)
+        {
+            ReminderData d = ctrl.ReminderData;
+            try
+            {
+                // This will update exactly one controll
+                // instead of redrawing all.
+                //remindings[d].DisplayDate();
+
+                // Redraw remindings because we are able to outdate random notification
+                // In release version notification will be already sorted and we can use code above.
+                RedrawRemindings();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Some data were lost. Can't update reminding controll.\nMessage: " + ex.Message);
+            }
+        }
+
+        private void OnReadyToRemove(NotificationControll ctrl)
+        {
+            try
+            {
+                NotificationsContainer.Children.Remove(ctrl);
+                lock (remindings)
+                {
+                    remindings.Remove(ctrl.ReminderData);
+                }
+            }
+            catch(ArgumentNullException ex)
+            {
+                MessageBox.Show("Controll does not contain ReminderData. Message: " + ex.Message);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Unexpected exception on deleting notification controll. Message: " + ex.Message);
+            }
         }
 
         private void ChangeNotification(ReminderData d)

@@ -22,6 +22,7 @@ namespace SimpleReminder.Screens
     public partial class NotificationScreen : UserControl
     {
         private ReminderData reminderData;
+        private DateTime selectedDateTime;
 
         public ReminderData ReminderData
         {
@@ -42,22 +43,12 @@ namespace SimpleReminder.Screens
         public event ObjChanged SaveRequired;
         public event ObjChanged RemoveRequired;
 
-        public NotificationScreen()
-        {
-            MakeInitialization();
-            ReminderData = new ReminderData();
-        }
-
         public NotificationScreen(ReminderData data)
-        {
-            MakeInitialization();
-            ReminderData = data;
-        }
-
-        private void MakeInitialization()
         {
             InitializeComponent();
             InitializeTimePickers();
+            ReminderData = data;
+            selectedDateTime = data.SelectedDate;
         }
 
         private void InitializeTimePickers()
@@ -83,24 +74,24 @@ namespace SimpleReminder.Screens
 
         private void DatePickerSelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            DateTime s = reminderData.SelectedDate;
-            if (DatePicker.SelectedDate.HasValue)
+            DateTime s = selectedDateTime;
+            if (DatePicker.SelectedDate.HasValue && (DatePicker.SelectedDate.Value - DateTime.Now).TotalDays > -1)
             {
                 DateTime p = DatePicker.SelectedDate.Value;
-                reminderData.SelectedDate = new DateTime(p.Year, p.Month, p.Day, s.Hour, s.Minute, 0);
+                selectedDateTime = new DateTime(p.Year, p.Month, p.Day, s.Hour, s.Minute, 0);
             }
         }
 
         private void HoursPickerSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            DateTime s = reminderData.SelectedDate;
-            reminderData.SelectedDate = new DateTime(s.Year, s.Month, s.Day, HoursPicker.SelectedIndex, s.Minute, 0);
+            DateTime s = selectedDateTime;
+            selectedDateTime = new DateTime(s.Year, s.Month, s.Day, HoursPicker.SelectedIndex, s.Minute, 0);
         }
 
         private void MinutesPickerSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            DateTime s = reminderData.SelectedDate;
-            reminderData.SelectedDate = new DateTime(s.Year, s.Month, s.Day, s.Hour, MinutesPicker.SelectedIndex, 0);
+            DateTime s = selectedDateTime;
+            selectedDateTime = new DateTime(s.Year, s.Month, s.Day, s.Hour, MinutesPicker.SelectedIndex, 0);
         }
 
         private void NotificationMessageTextChanged(object sender, TextChangedEventArgs e)
@@ -110,7 +101,15 @@ namespace SimpleReminder.Screens
 
         private void SaveButtonClick(object sender, RoutedEventArgs e)
         {
-            SaveRequired?.Invoke(this);
+            if (selectedDateTime > DateTime.Now)
+            {
+                ReminderData.SelectedDate = selectedDateTime;
+                SaveRequired?.Invoke(this);
+            }
+            else
+            {
+                MessageBox.Show("Selected date and time shoud be in future!");
+            }
         }
 
         private void RemoveButtonClick(object sender, RoutedEventArgs e)

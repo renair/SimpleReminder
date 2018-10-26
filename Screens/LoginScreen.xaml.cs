@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SimpleReminder.DataAccess;
 
 namespace SimpleReminder.Screens
 {
@@ -32,8 +33,8 @@ namespace SimpleReminder.Screens
 
         private void loginButton_Click(object sender, RoutedEventArgs e)
         {
-            // TODO Replace with user authorization
-            if(loginBox.Text != "andrew" || passwordBox.Password != "andrew")
+
+            if(!UserAccess.IsRegistered(loginBox.Text, passwordBox.Password))
             {
                 MessageBox.Show("Password: andrew\nLogin: andrew");
                 return;

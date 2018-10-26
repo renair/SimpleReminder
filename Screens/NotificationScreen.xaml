@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SimpleReminder.Screens"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="600">
     <Grid>
@@ -25,7 +26,7 @@
             <ColumnDefinition Width="0.2*"/>
         </Grid.ColumnDefinitions>
         <DatePicker Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" FontSize="22"
-                    Name="DatePicker" SelectedDateChanged="DatePickerSelectedDateChanged"/>
+                    Name="DatePicker" SelectedDateChanged="DatePickerSelectedDateChanged" DisplayDateStart="{x:Static sys:DateTime.Now}"/>
         <ComboBox Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                   FontSize="35" FontWeight="Bold" Name="HoursPicker" SelectionChanged="HoursPickerSelectionChanged"/>
         <Label Grid.Column="3" Grid.Row="1" Content=":" Margin="0,-7,0,0" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
