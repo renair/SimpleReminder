@@ -46,9 +46,14 @@
    `Результат`: Потрібно змінити текст попередження.
    
    `Виправлення`: Текст попередження змінено на наступний
-   `Application works in test mode.  
+   
+   ```
+   Application works in test mode.  
+   
    Password: andrew  
-   Login: andrew`
+   
+   Login: andrew
+   ```
 
 4. **Головний екран нагадувань**
 
