@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using SimpleReminder.Data;
 
 namespace SimpleReminder.DataAccess
@@ -12,10 +10,13 @@ namespace SimpleReminder.DataAccess
     // API equests.
     class UserAccess
     {
+        // Hardcoded user which used as stub to log in system.
         private static List<UserData> users = new List<UserData>() {
             new UserData{Id = 1,  Surname = "Gomenyuk", Name = "Andrew", Login = "andrew", Email = "mail@m.com", LastLogin = DateTime.Now, PasswordHash = GetHash("andrew")}
         };
 
+        // Method to get has as string from string.
+        // Writed for hashing passwords.
         private static string GetHash(string s)
         {
             HashAlgorithm algorithm = SHA256.Create();
@@ -28,6 +29,7 @@ namespace SimpleReminder.DataAccess
             return builder.ToString();
         }
 
+        // Check if thre is account with given login and password
         public static bool IsRegistered(string login, string passwd)
         {
             foreach(UserData ud in users)

@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using SimpleReminder.Data;
 
 namespace SimpleReminder.Controlls
@@ -24,8 +15,13 @@ namespace SimpleReminder.Controlls
         public delegate void PassingData(ReminderData d);
         public delegate void ObjectChanged(NotificationControll n);
 
+        // This event will be invoked when user click on notificatioin
         public event PassingData RequiringSettings;
+        // This event will be invoked when notification became outdated.
+        // Checking for outdating performs in Update() method.
         public event ObjectChanged NotificationOutdated;
+        // This event will be invoked when notifaction already outdated
+        // and user click on it.
         public event ObjectChanged ReadyToRemove;
 
         private ReminderData reminderData;
@@ -39,6 +35,7 @@ namespace SimpleReminder.Controlls
             set
             {
                 reminderData = value;
+                // Display setted data
                 DisplayDate();
             }
         }
@@ -47,6 +44,7 @@ namespace SimpleReminder.Controlls
         {
             InitializeComponent();
             reminderData = data;
+            // Display data on object initialization.
             DisplayDate();
         }
 
@@ -59,19 +57,29 @@ namespace SimpleReminder.Controlls
             NotificationMessage.Text = reminderData.ReminderText;
             Update();
         }
-
+        
         public void Update()
         {
-            //TODO replace it with normal code
+            // This method will work only if notification just became outdated
+            // Checking brush color do as marker is outdated event already invoked
+            // and to make oudated event red.
             if(reminderData.isTimeCome() && MainButton.Background != Brushes.Red)
             {
                 MainButton.Background = Brushes.Red;
                 NotificationOutdated?.Invoke(this);
             }
+            // If we edit notification when it already outdated we will change
+            // data in it, so we needto be able to change notification status
+            else if(!reminderData.isTimeCome())
+            {
+                MainButton.Background = Brushes.White;
+            }
         }
 
         private void MainButtonClick(object sender, RoutedEventArgs e)
         {
+            // Check is reminder is outdated and it it is - invoke ReadyToRemove
+            // in other way - it requre settings for this reminder.
             if(reminderData.isTimeCome())
             {
                 ReadyToRemove?.Invoke(this);
@@ -80,6 +88,9 @@ namespace SimpleReminder.Controlls
             RequiringSettings?.Invoke(reminderData);
         }
 
+        // TODO Remove method
+        // This method was writed for tests. You can press left button on notification
+        // and it immediately became oudated.
         private void MainButtonMouseDown(object sender, MouseButtonEventArgs e)
         {
             if(e.RightButton.HasFlag(MouseButtonState.Pressed))

@@ -63,7 +63,7 @@ namespace SimpleReminder.Data
             if (obj != null && obj is ReminderData)
             {
                 ReminderData r = (ReminderData)obj;
-                return (int)(this.selectedDate - r.selectedDate).TotalMinutes;
+                return (int)Math.Ceiling((this.selectedDate - r.selectedDate).TotalMinutes + 0.5);
             }
             throw new Exception();
         }

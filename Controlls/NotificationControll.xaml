@@ -40,11 +40,11 @@
                     <ColumnDefinition Width="0.03*"/>
                 </Grid.ColumnDefinitions>
                 <!-- Notification elements definition -->
-                <Label Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="35" FontWeight="DemiBold" Name="DateLabel" Content="27/01/2020"/>
-                <Label Grid.Column="3" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="35" FontWeight="DemiBold"  Name="HoursLabel" Content="00"/>
+                <Label Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="35" FontWeight="DemiBold" x:FieldModifier="private" Name="DateLabel" Content="27/01/2020"/>
+                <Label Grid.Column="3" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="35" FontWeight="DemiBold" x:FieldModifier="private" Name="HoursLabel" Content="00"/>
                 <Label Grid.Column="4" Grid.Row="1" Content=":" Margin="0,-7,0,0" FontSize="35" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <Label Grid.Column="5" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="35" FontWeight="DemiBold"  Name="MinutesLabel" Content="00"/>
-                <TextBox Grid.Column="7" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Name="NotificationMessage" VerticalScrollBarVisibility="Auto"
+                <Label Grid.Column="5" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="35" FontWeight="DemiBold" x:FieldModifier="private" Name="MinutesLabel" Content="00"/>
+                <TextBox Grid.Column="7" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:FieldModifier="private" Name="NotificationMessage" VerticalScrollBarVisibility="Auto"
                  TextWrapping="Wrap" AcceptsReturn="True" FontSize="20" IsReadOnly="True"/>
             </Grid>
         </Button>

@@ -1,20 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Threading;
+using System.Linq;
 using SimpleReminder.Data;
 using SimpleReminder.Controlls;
-using System.Windows.Threading;
 
 namespace SimpleReminder.Screens
 {
@@ -126,7 +117,7 @@ namespace SimpleReminder.Screens
             NotificationEditorContentControll.Content = editor;
         }
 
-        private void OnNotificationEdited(NotificationScreen screen)
+        private void OnNotificationEdited(ReminderData data)
         {
             // Move NotificationEditor behind all notifications
             Canvas.SetZIndex(NotificationEditor, -1);
@@ -137,7 +128,7 @@ namespace SimpleReminder.Screens
             RedrawRemindings();
         }
 
-        private void OnNotificationRemoved(NotificationScreen screen)
+        private void OnNotificationRemoved(ReminderData data)
         {
             // Move NotificationEditor behind all notifications
             Canvas.SetZIndex(NotificationEditor, -1);
@@ -145,13 +136,12 @@ namespace SimpleReminder.Screens
             NotificationEditorContentControll.Content = null;
             try
             {
-                var d = screen.ReminderData;
                 lock(remindings)
                 {
                     // Remove controll from all notifications controlls
-                    NotificationsContainer.Children.Remove(remindings[d]);
+                    NotificationsContainer.Children.Remove(remindings[data]);
                     // Remove data with controll because we dont't need it anymore 
-                    remindings.Remove(d);
+                    remindings.Remove(data);
                 }
                 
             }
@@ -167,7 +157,7 @@ namespace SimpleReminder.Screens
             {
                 try
                 {
-                    // Order remindings based in it's data
+                    // Order remindings based in its data
                     remindings = remindings.OrderBy(e => e.Key).ToDictionary(e => e.Key, e => e.Value);
                     // Clear all controlls from screen
                     NotificationsContainer.Children.Clear();
@@ -176,6 +166,7 @@ namespace SimpleReminder.Screens
                     {
                         // Update controll because it can be outdated or have changed data
                         ctrl.DisplayDate();
+                        // This if will be romoved in release
                         if (!NotificationsContainer.Children.Contains(ctrl))
                         {
                             NotificationsContainer.Children.Add(ctrl);
