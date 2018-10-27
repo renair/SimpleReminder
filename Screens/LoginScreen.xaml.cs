@@ -22,7 +22,7 @@ namespace SimpleReminder.Screens
             // Chak if user registered
             if(!UserAccess.IsRegistered(loginBox.Text, passwordBox.Password))
             {
-                MessageBox.Show("Password: andrew\nLogin: andrew");
+                MessageBox.Show("Application works in test mode.\nPassword: andrew\nLogin: andrew");
                 return;
             }
             // If user exists and password is correct
