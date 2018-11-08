@@ -1,11 +1,10 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 using SimpleReminder.DataAccess;
 
 namespace SimpleReminder.Screens
 {
     // Codebehind for LoginScreen it should just login user.
-    public partial class LoginScreen : UserControl
+    public partial class LoginScreen
     {
         public delegate void Auth();
 

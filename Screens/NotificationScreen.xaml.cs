@@ -6,20 +6,20 @@ using SimpleReminder.Data;
 namespace SimpleReminder.Screens
 {
     // 
-    public partial class NotificationScreen : UserControl
+    public partial class NotificationScreen
     {
-        private ReminderData reminderData;
+        private ReminderData _reminderData;
 
         public ReminderData ReminderData
         {
             get
             {
-                return reminderData;
+                return _reminderData;
             }
 
             set
             {
-                reminderData = value;
+                _reminderData = value;
                 Update();
             }
         }
@@ -64,7 +64,7 @@ namespace SimpleReminder.Screens
         // Save text whe it was changed
         private void NotificationMessageTextChanged(object sender, TextChangedEventArgs e)
         {
-            reminderData.ReminderText = NotificationMessage.Text;
+            _reminderData.ReminderText = NotificationMessage.Text;
         }
 
         // SaveButton click event handler

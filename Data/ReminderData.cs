@@ -5,57 +5,24 @@ namespace SimpleReminder.Data
     public class ReminderData : IComparable
     {
         // Private parts with data
-        private Int64 id;
-        private DateTime selectedDate;
-        private string reminderText;
 
         // Properties for private fields
-        public Int64 Id
-        {
-            get
-            {
-                return id;
-            }
-            private set
-            {
-                id = value;
-            }
-        }
+        public long Id { get; private set; }
 
-        public DateTime SelectedDate
-        {
-            get
-            {
-                return selectedDate;
-            }
-            set
-            {
-                selectedDate = value;
-            }
-        }
+        public DateTime SelectedDate { get; set; }
 
-        public string ReminderText
-        {
-            get
-            {
-                return reminderText;
-            }
-            set
-            {
-                reminderText = value;
-            }
-        }
+        public string ReminderText { get; set; }
 
         // Make initialization to safe using without NullReferenceException.
         public ReminderData()
         {
-            selectedDate = DateTime.Now;
+            SelectedDate = DateTime.Now;
         }
 
         public ReminderData(Int64 id)
         {
-            selectedDate = DateTime.Now;
-            this.id = id;
+            SelectedDate = DateTime.Now;
+            Id = id;
         }
 
         public int CompareTo(object obj)
@@ -63,14 +30,14 @@ namespace SimpleReminder.Data
             if (obj != null && obj is ReminderData)
             {
                 ReminderData r = (ReminderData)obj;
-                return (int)Math.Ceiling((this.selectedDate - r.selectedDate).TotalMinutes + 0.5);
+                return (int)Math.Ceiling((SelectedDate - r.SelectedDate).TotalMinutes + 0.5);
             }
             throw new Exception();
         }
 
-        public bool isTimeCome()
+        public bool IsTimeCome()
         {
-            return selectedDate <= DateTime.Now;
+            return SelectedDate <= DateTime.Now;
         }
     }
 }

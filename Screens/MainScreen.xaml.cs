@@ -12,9 +12,9 @@ namespace SimpleReminder.Screens
     /// <summary>
     /// Логика взаимодействия для MainContent.xaml
     /// </summary>
-    public partial class MainScreen : UserControl
+    public partial class MainScreen
     {
-        private Dictionary<ReminderData, NotificationControll> remindings = new Dictionary<ReminderData, NotificationControll>();
+        private Dictionary<ReminderData, NotificationControl> _remindings = new Dictionary<ReminderData, NotificationControl>();
 
         public MainScreen()
         {
@@ -31,14 +31,14 @@ namespace SimpleReminder.Screens
         private void TimerTicked(object sender, EventArgs e)
         {
             // lock remindings to grant tht we use it personaly
-            lock(remindings)
+            lock(_remindings)
             {
                 // Iterate over controlls and update if TimeIsCome()
                 // Consider all remindings already sorted.
-                for(int i = 0; i < remindings.Count && remindings.Keys.ElementAt(i).isTimeCome(); ++i)
+                for(int i = 0; i < _remindings.Count && _remindings.Keys.ElementAt(i).IsTimeCome(); ++i)
                 {
-                    var  k = remindings.Keys.ElementAt(i);
-                    remindings[k].DisplayDate();
+                    var  k = _remindings.Keys.ElementAt(i);
+                    _remindings[k].DisplayDate();
                 }
             }
         }
@@ -50,24 +50,23 @@ namespace SimpleReminder.Screens
             data.SelectedDate = DateTime.Now.AddHours(1);
             data.ReminderText = "";
             // Create controll which contain this data
-            NotificationControll ctrl = new NotificationControll(data);
+            NotificationControl ctrl = new NotificationControl(data);
             // Set some handlers for this controll
             ctrl.RequiringSettings += ChangeNotification;
             ctrl.NotificationOutdated += OnNotificationOutdated;
             // Remove notification controll when time come
             ctrl.ReadyToRemove += OnReadyToRemove;
             // Add data and controll to Dictionary for redrawing, etc.
-            lock(remindings)
+            lock(_remindings)
             {
-                remindings.Add(data, ctrl);
+                _remindings.Add(data, ctrl);
             }
             // Redraw all existing Notifications included created one.
             RedrawRemindings();
         }
 
-        private void OnNotificationOutdated(NotificationControll ctrl)
+        private void OnNotificationOutdated(NotificationControl ctrl)
         {
-            ReminderData d = ctrl.ReminderData;
             try
             {
                 // This will update exactly one controll
@@ -84,14 +83,14 @@ namespace SimpleReminder.Screens
             }
         }
 
-        private void OnReadyToRemove(NotificationControll ctrl)
+        private void OnReadyToRemove(NotificationControl ctrl)
         {
             try
             {
-                lock (remindings)
+                lock (_remindings)
                 {
                     NotificationsContainer.Children.Remove(ctrl);
-                    remindings.Remove(ctrl.ReminderData);
+                    _remindings.Remove(ctrl.ReminderData);
                 }
             }
             catch(ArgumentNullException ex)
@@ -107,7 +106,7 @@ namespace SimpleReminder.Screens
         private void ChangeNotification(ReminderData d)
         {
             // Move NotificationEditor in front of Screen
-            Canvas.SetZIndex(NotificationEditor, 1);
+            Panel.SetZIndex(NotificationEditor, 1);
             // Create edit screen with reminder data
             NotificationScreen editor = new NotificationScreen(d);
             // Setup reaction for events
@@ -120,7 +119,7 @@ namespace SimpleReminder.Screens
         private void OnNotificationEdited(ReminderData data)
         {
             // Move NotificationEditor behind all notifications
-            Canvas.SetZIndex(NotificationEditor, -1);
+            Panel.SetZIndex(NotificationEditor, -1);
             // Remove edit screen
             NotificationEditorContentControll.Content = null;
             // Redraw all list because date can change and we need to
@@ -131,17 +130,17 @@ namespace SimpleReminder.Screens
         private void OnNotificationRemoved(ReminderData data)
         {
             // Move NotificationEditor behind all notifications
-            Canvas.SetZIndex(NotificationEditor, -1);
+            Panel.SetZIndex(NotificationEditor, -1);
             // Remove edit screen
             NotificationEditorContentControll.Content = null;
             try
             {
-                lock(remindings)
+                lock(_remindings)
                 {
                     // Remove controll from all notifications controlls
-                    NotificationsContainer.Children.Remove(remindings[data]);
+                    NotificationsContainer.Children.Remove(_remindings[data]);
                     // Remove data with controll because we dont't need it anymore 
-                    remindings.Remove(data);
+                    _remindings.Remove(data);
                 }
                 
             }
@@ -153,16 +152,16 @@ namespace SimpleReminder.Screens
 
         private void RedrawRemindings()
         {
-            lock(remindings)
+            lock(_remindings)
             {
                 try
                 {
                     // Order remindings based in its data
-                    remindings = remindings.OrderBy(e => e.Key).ToDictionary(e => e.Key, e => e.Value);
+                    _remindings = _remindings.OrderBy(e => e.Key).ToDictionary(e => e.Key, e => e.Value);
                     // Clear all controlls from screen
                     NotificationsContainer.Children.Clear();
                     // Add already ordered controlls
-                    foreach (NotificationControll ctrl in remindings.Values.ToArray())
+                    foreach (NotificationControl ctrl in _remindings.Values.ToArray())
                     {
                         // Update controll because it can be outdated or have changed data
                         ctrl.DisplayDate();
