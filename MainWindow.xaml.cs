@@ -1,23 +1,21 @@
-﻿using System.Windows;
-using SimpleReminder.Screens;
+﻿using SimpleReminder.Managers;
+using SimpleReminder.ViewModels;
 
 namespace SimpleReminder
 {
     // This class only change from LoginScreen to MainScreen
     // and backward in future on log out
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         public MainWindow()
         {
             InitializeComponent();
-            LoginScreen loginScreen = new LoginScreen();
-            loginScreen.LoginDone += UserLoggedIn;
-            contentControl.Content = loginScreen;
-        }
+            NavigationManager.Initialize(this);
+            NavigationManager.Navigate(Managers.Screens.SignIn);
 
-        private void UserLoggedIn()
-        {
-            contentControl.Content = new MainScreen();
+            LoaderViewModel vmodel = new LoaderViewModel();
+            LoaderManager.Initialize(vmodel);
+            DataContext = vmodel;
         }
     }
 }

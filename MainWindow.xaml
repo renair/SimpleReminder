@@ -3,14 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SimpleReminder"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
         Title="Remindings" Height="600" Width="900"
         MinHeight="440" MinWidth="900">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <ContentControl Name="contentControl" Grid.Row="0"/>
+        <ContentControl Name="ContentControl" IsEnabled="{Binding Path=ContentEnabled, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <!--<fa:ImageAwesome Name="ImageAwesome" Icon="Refresh" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" Spin="True"/>-->
     </Grid>
 </Window>

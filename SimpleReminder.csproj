@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FontAwesomeWPF, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FontAwesomeWPF.1.0.0\lib\net45\FontAwesomeWPF.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -56,9 +59,13 @@
     </ApplicationDefinition>
     <Compile Include="DataAccess\UserAccess.cs" />
     <Compile Include="Data\UserData.cs" />
+    <Compile Include="Managers\LoaderManager.cs" />
+    <Compile Include="Managers\NavigationManager.cs" />
     <Compile Include="Screens\NotificationScreen.xaml.cs">
       <DependentUpon>NotificationScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tools\ILoaderOwner.cs" />
+    <Compile Include="ViewModels\LoaderViewModel.cs" />
     <Page Include="Screens\LoginScreen.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -86,7 +93,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Controlls\NotificationControll.xaml">
+    <Page Include="Controlls\NotificationControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -96,8 +103,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controlls\NotificationControll.xaml.cs">
-      <DependentUpon>NotificationControll.xaml</DependentUpon>
+    <Compile Include="Controlls\NotificationControl.xaml.cs">
+      <DependentUpon>NotificationControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -116,6 +123,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

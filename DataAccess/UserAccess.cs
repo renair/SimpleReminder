@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using SimpleReminder.Data;
 
 namespace SimpleReminder.DataAccess
 {
     // Just test case. In future will replace with DB or remote
     // API equests.
-    class UserAccess
+    static class UserAccess
     {
         // Hardcoded user which used as stub to log in system.
         private static List<UserData> users = new List<UserData>() {
@@ -30,16 +32,21 @@ namespace SimpleReminder.DataAccess
         }
 
         // Check if thre is account with given login and password
-        public static bool IsRegistered(string login, string passwd)
+        public static Task<bool> IsRegistered(string login, string passwd)
         {
-            foreach(UserData ud in users)
+            return Task.Run(() =>
             {
-                if(ud.Login == login && ud.PasswordHash == GetHash(passwd))
+                Thread.Sleep(5*1000);
+                foreach (UserData ud in users)
                 {
-                    return true;
+                    if (ud.Login == login && ud.PasswordHash == GetHash(passwd))
+                    {
+                        return true;
+                    }
                 }
-            }
-            return false;
+
+                return false;
+            });
         }
     }
 }

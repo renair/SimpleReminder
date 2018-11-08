@@ -4,7 +4,7 @@ namespace SimpleReminder.Data
 {
     internal class UserData
     {
-        public ulong Id { get; set; }
+        public ulong Id { get; internal set; }
 
         public string Surname { get; set; }
 
