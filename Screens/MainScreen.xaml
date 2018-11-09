@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:SimpleReminder"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -16,13 +16,17 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10px"/>
-            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.15*"/>
+            <ColumnDefinition Width="0.35*"/>
             <ColumnDefinition Width="0.4*"/>
             <ColumnDefinition Width="0.5*"/>
             <ColumnDefinition Width="10px"/>
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="2" Grid.Row="3" Content="Add" FontSize="30" FontWeight="DemiBold" x:FieldModifier="private" Name="AddButton" Click="AddButtonClick"/>
-        <ScrollViewer Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3">
+        <Button Grid.Column="3" Grid.Row="3" Content="Add" FontSize="30" FontWeight="DemiBold" x:FieldModifier="private" Name="AddButton" Click="AddButtonClick"/>
+        <Button Grid.Column="1" Grid.Row="3" FontSize="30" x:FieldModifier="private" Name="LogOutButton" Click="LogOutButtonClick">
+            <fa:ImageAwesome Icon="PowerOff"/>
+        </Button>
+        <ScrollViewer Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="4">
             <StackPanel x:FieldModifier="private" Name="NotificationsContainer"/>
         </ScrollViewer>
         <ContentControl x:FieldModifier="private" Name="NotificationEditor" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" Grid.RowSpan="9" Panel.ZIndex="-1">

@@ -20,6 +20,7 @@ namespace SimpleReminder.Managers
                 if (value == null)
                 {
                     FileFolderHelper.RemoveLastUserCache();
+                    return;
                 }
                 try
                 {

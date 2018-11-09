@@ -99,7 +99,7 @@ namespace SimpleReminder.Screens
             // Add ReminderData to other user's notifications
             LoaderManager.ShowLoader();
             await AccountManager.AddReminding(data);
-            LoaderManager.HideLoader();;
+            LoaderManager.HideLoader();
             // Create controll which contain this data
             NotificationControl ctrl = new NotificationControl(data);
             // Set some handlers for this controll
@@ -149,7 +149,7 @@ namespace SimpleReminder.Screens
 
                 LoaderManager.ShowLoader();
                 await AccountManager.DeleteReminding(ctrl.ReminderData);
-                LoaderManager.HideLoader(); ;
+                LoaderManager.HideLoader();
 
                 Logger.Log("Notification removed.");
             }
@@ -212,7 +212,7 @@ namespace SimpleReminder.Screens
 
                 LoaderManager.ShowLoader();
                 await AccountManager.DeleteReminding(data);
-                LoaderManager.HideLoader(); ;
+                LoaderManager.HideLoader();
             }
             catch(ArgumentNullException)
             {
@@ -254,6 +254,13 @@ namespace SimpleReminder.Screens
                     Logger.Log("Unexpected exception on redrawing!", ex);
                 }
             }
+        }
+
+        private void LogOutButtonClick(object sender, RoutedEventArgs e)
+        {
+            AccountManager.CurrentUser = null;
+            NavigationManager.Navigate(Managers.Screens.SignIn);
+            Logger.Log("User logged out.");
         }
     }
 }
