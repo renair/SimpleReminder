@@ -9,6 +9,6 @@
         MinHeight="440" MinWidth="900">
     <Grid>
         <ContentControl Name="ContentControl" IsEnabled="{Binding Path=ContentEnabled, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-        <!--<fa:ImageAwesome Name="ImageAwesome" Icon="Refresh" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Center" Spin="True"/>-->
+        <fa:ImageAwesome Name="Loader" Icon="Spinner" Width="70" Height="70" HorizontalAlignment="Center" VerticalAlignment="Center" Spin="True" Visibility="{Binding Path=LoaderVisibility, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </Window>

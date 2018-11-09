@@ -1,4 +1,5 @@
 ﻿using SimpleReminder.Managers;
+using SimpleReminder.Tools;
 using SimpleReminder.ViewModels;
 
 namespace SimpleReminder
@@ -11,11 +12,14 @@ namespace SimpleReminder
         {
             InitializeComponent();
             NavigationManager.Initialize(this);
-            NavigationManager.Navigate(Managers.Screens.SignIn);
+            Managers.Screens direction = AccountManager.CurrentUser != null ? Managers.Screens.Main : Managers.Screens.SignIn;
+            NavigationManager.Navigate(direction);
 
             LoaderViewModel vmodel = new LoaderViewModel();
             LoaderManager.Initialize(vmodel);
             DataContext = vmodel;
+
+            Logger.Log("Application started.");
         }
     }
 }

@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using SimpleReminder.Data;
+using SimpleReminder.Managers;
+using SimpleReminder.Tools;
 
 namespace SimpleReminder.DataAccess
 {
@@ -13,9 +16,28 @@ namespace SimpleReminder.DataAccess
     static class UserAccess
     {
         // Hardcoded user which used as stub to log in system.
-        private static List<UserData> users = new List<UserData>() {
-            new UserData{Id = 1,  Surname = "Gomenyuk", Name = "Andrew", Login = "andrew", Email = "mail@m.com", LastLogin = DateTime.Now, PasswordHash = GetHash("andrew")}
+        private static List<UserData> _users = new List<UserData>() {
+            new UserData{Surname = "Gomenyuk", Name = "Andrew", Login = "andrew", Email = "mail@m.com", LastLogin = DateTime.Now, PasswordHash = GetHash("andrew")}
         };
+
+        static UserAccess()
+        {
+            List<UserData> usersCandidate = null;
+            try
+            {
+                usersCandidate = Serializer.Deserialize<List<UserData>>(FileFolderHelper.StorageFilePath);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log("Failed to deserialize user list.", ex);
+            }
+
+            if (usersCandidate != null)
+            {
+                _users = usersCandidate;
+                Logger.Log("Users successfully deserialized");
+            }
+        }
 
         // Method to get has as string from string.
         // Writed for hashing passwords.
@@ -32,21 +54,51 @@ namespace SimpleReminder.DataAccess
         }
 
         // Check if thre is account with given login and password
-        public static Task<bool> IsRegistered(string login, string passwd)
+        public static Task<bool> SignIn(string login, string passwd)
         {
             return Task.Run(() =>
             {
-                Thread.Sleep(5*1000);
-                foreach (UserData ud in users)
+                Thread.Sleep(5 * 1000);
+                foreach (UserData ud in _users)
                 {
                     if (ud.Login == login && ud.PasswordHash == GetHash(passwd))
                     {
+                        ud.LastLogin = DateTime.Now;
+                        AccountManager.CurrentUser = ud;
+                        UpdateDataFile();
                         return true;
                     }
                 }
 
                 return false;
             });
+        }
+
+        public static Task<UserData> SignUp(UserData userData)
+        {
+            return Task.Run(() =>
+            {
+                Thread.Sleep(5 * 1000);
+                ulong lastId = _users.OrderBy(u => u.Id).Last().Id;
+                UserData dataWithId = new UserData(lastId, userData);
+                _users.Add(dataWithId);
+                UpdateDataFile();
+                return dataWithId;
+            });
+        }
+
+        // public access to update from account manager
+        // it will be removed in future
+        public static void UpdateDataFile()
+        {
+            try
+            {
+                Serializer.Serialize(_users, FileFolderHelper.StorageFilePath);
+            }
+            catch (Exception e)
+            {
+                Logger.Log("Can't serialize users too file.", e);
+            }
         }
     }
 }

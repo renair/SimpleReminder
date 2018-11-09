@@ -2,6 +2,7 @@
 
 namespace SimpleReminder.Data
 {
+    [Serializable]
     public class ReminderData : IComparable
     {
         // Private parts with data

@@ -5,7 +5,6 @@ using SimpleReminder.Data;
 
 namespace SimpleReminder.Screens
 {
-    // 
     public partial class NotificationScreen
     {
         private ReminderData _reminderData;
