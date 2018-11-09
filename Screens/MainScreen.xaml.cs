@@ -83,6 +83,7 @@ namespace SimpleReminder.Screens
         public void NavigatedFrom()
         {
             _timer.Stop();
+            _timer = null;
             lock (_remindings)
             {
                 _remindings.Clear();

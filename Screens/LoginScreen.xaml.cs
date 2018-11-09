@@ -30,6 +30,11 @@ namespace SimpleReminder.Screens
             }
         }
 
+        private void registerButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationManager.Navigate(Managers.Screens.SignUp);
+        }
+
         public void NavigatedTo()
         {
             loginBox.Text = "";

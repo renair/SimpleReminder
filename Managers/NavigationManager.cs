@@ -19,7 +19,7 @@ namespace SimpleReminder.Managers
             _contentControl = mainContentControl;
             _currentScreen = null;
             _loginScreen = new LoginScreen();
-            _registerScreen = new LoginScreen();
+            _registerScreen = new RegisterScreen();
             _mainScreen = new MainScreen();
         }
 
@@ -30,19 +30,21 @@ namespace SimpleReminder.Managers
             {
                 case Screens.SignIn:
                     _loginScreen.NavigatedTo();
-                    _contentControl.ContentControl.Content = _loginScreen;
+                    _currentScreen = _loginScreen;
                     break;
                 case Screens.SignUp:
                     _registerScreen.NavigatedTo();
-                    _contentControl.ContentControl.Content = _registerScreen;
+                     _currentScreen = _registerScreen;
                     break;
                 case Screens.Main:
                     _mainScreen.NavigatedTo();
-                    _contentControl.ContentControl.Content = _mainScreen;
+                    _currentScreen = _mainScreen;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(navigateToScreen), navigateToScreen, null);
             }
+
+            _contentControl.ContentControl.Content = _currentScreen;
         }
     }
 

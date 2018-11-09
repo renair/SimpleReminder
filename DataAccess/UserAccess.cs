@@ -58,7 +58,7 @@ namespace SimpleReminder.DataAccess
         {
             return Task.Run(() =>
             {
-                Thread.Sleep(5 * 1000);
+                Thread.Sleep(2 * 1000);
                 foreach (UserData ud in _users)
                 {
                     if (ud.Login == login && ud.PasswordHash == GetHash(passwd))
@@ -74,13 +74,17 @@ namespace SimpleReminder.DataAccess
             });
         }
 
-        public static Task<UserData> SignUp(UserData userData)
+        public static Task<UserData> SignUp(UserData userData, string password)
         {
             return Task.Run(() =>
             {
-                Thread.Sleep(5 * 1000);
+                Thread.Sleep(3 * 1000);
+                // Fetching last id
                 ulong lastId = _users.OrderBy(u => u.Id).Last().Id;
+                // Init new user with id and hashed password
                 UserData dataWithId = new UserData(lastId, userData);
+                dataWithId.PasswordHash = GetHash(password);
+                // Add to global users storage and update storage
                 _users.Add(dataWithId);
                 UpdateDataFile();
                 return dataWithId;
