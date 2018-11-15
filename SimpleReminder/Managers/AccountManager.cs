@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using SimpleReminder.Data;
-using SimpleReminder.DataAccess;
-using SimpleReminder.Tools;
+using DataStorage.Contexts;
+using DataStorage.Models;
+using Tools;
+using FileFolderHelper = SimpleReminder.Tools.FileFolderHelper;
 
 namespace SimpleReminder.Managers
 {

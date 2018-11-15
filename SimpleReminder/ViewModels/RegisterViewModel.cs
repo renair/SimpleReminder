@@ -1,13 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows;
 using System.Windows.Input;
-using System.Windows.Markup;
-using SimpleReminder.Data;
-using SimpleReminder.DataAccess;
+using DataStorage.Contexts;
+using DataStorage.Models;
 using SimpleReminder.Managers;
-using SimpleReminder.Tools;
+using Tools;
 
 namespace SimpleReminder.ViewModels
 {

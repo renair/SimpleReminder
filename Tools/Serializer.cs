@@ -2,11 +2,11 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace SimpleReminder.Tools
+namespace Tools
 {
-    internal static class Serializer
+    public static class Serializer
     {
-        internal static void Serialize<TObject>(TObject obj, string filePath)
+        public static void Serialize<TObject>(TObject obj, string filePath)
         {
             try
             {
@@ -24,7 +24,7 @@ namespace SimpleReminder.Tools
             }
         }
 
-        internal static TObject Deserialize<TObject>(string filePath) where TObject : class
+        public static TObject Deserialize<TObject>(string filePath) where TObject : class
         {
             try
             {

@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2016
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleReminder", "SimpleReminder\SimpleReminder.csproj", "{0CA72979-9FD3-4CC8-81AD-08399EBF791C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataStorage", "DataStorage\DataStorage.csproj", "{83D19970-D088-4DA7-B8D8-25C394439E26}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools", "Tools\Tools.csproj", "{F959D058-AFA1-4A79-8512-1624047740CC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0CA72979-9FD3-4CC8-81AD-08399EBF791C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CA72979-9FD3-4CC8-81AD-08399EBF791C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CA72979-9FD3-4CC8-81AD-08399EBF791C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CA72979-9FD3-4CC8-81AD-08399EBF791C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83D19970-D088-4DA7-B8D8-25C394439E26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83D19970-D088-4DA7-B8D8-25C394439E26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83D19970-D088-4DA7-B8D8-25C394439E26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83D19970-D088-4DA7-B8D8-25C394439E26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F959D058-AFA1-4A79-8512-1624047740CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F959D058-AFA1-4A79-8512-1624047740CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F959D058-AFA1-4A79-8512-1624047740CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F959D058-AFA1-4A79-8512-1624047740CC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {473A6A86-91C1-4C38-BC29-1136D71B47E8}
+	EndGlobalSection
+EndGlobal

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using SimpleReminder.Data;
+using DataStorage.Models;
 
 namespace SimpleReminder.Screens
 {

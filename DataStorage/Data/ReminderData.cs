@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SimpleReminder.Data
+namespace DataStorage.Models
 {
     [Serializable]
     public class ReminderData : IComparable

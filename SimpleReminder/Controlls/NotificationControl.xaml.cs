@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using SimpleReminder.Data;
+using DataStorage.Models;
 
 namespace SimpleReminder.Controlls
 {

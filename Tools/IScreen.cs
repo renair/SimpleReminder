@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SimpleReminder.Tools
+﻿namespace Tools
 {
-    internal interface IScreen
+    public interface IScreen
     {
         void NavigatedTo();
         void NavigatedFrom();

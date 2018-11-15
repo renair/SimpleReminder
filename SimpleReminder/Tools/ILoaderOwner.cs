@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 
-namespace Tools
+namespace SimpleReminder.Tools
 {
-    public interface ILoaderOwner : INotifyPropertyChanged
+    internal interface ILoaderOwner : INotifyPropertyChanged
     {
         Visibility LoaderVisibility { get; set; }
         bool ContentEnabled { get; set; }

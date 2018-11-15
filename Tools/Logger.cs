@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 // ReSharper disable RedundantAssignment
 
-namespace SimpleReminder.Tools
+namespace Tools
 {
     public static class Logger
     {

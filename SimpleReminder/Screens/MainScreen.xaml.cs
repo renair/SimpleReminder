@@ -4,10 +4,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Linq;
-using SimpleReminder.Data;
+using DataStorage.Models;
 using SimpleReminder.Controlls;
 using SimpleReminder.Managers;
-using SimpleReminder.Tools;
+using Tools;
+using IScreen = SimpleReminder.Tools.IScreen;
 
 namespace SimpleReminder.Screens
 {

@@ -5,15 +5,14 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using SimpleReminder.Data;
-using SimpleReminder.Managers;
-using SimpleReminder.Tools;
+using DataStorage.Models;
+using Tools;
 
-namespace SimpleReminder.DataAccess
+namespace DataStorage.Contexts
 {
     // Just test case. In future will replace with DB or remote
     // API equests.
-    static class UserAccess
+    public static class UserAccess
     {
         // Hardcoded user which used as stub to log in system.
         private static List<UserData> _users = new List<UserData>() {
@@ -54,7 +53,7 @@ namespace SimpleReminder.DataAccess
         }
 
         // Check if thre is account with given login and password
-        public static Task<bool> SignIn(string login, string passwd)
+        public static Task<UserData> SignIn(string login, string passwd)
         {
             return Task.Run(() =>
             {
@@ -64,13 +63,12 @@ namespace SimpleReminder.DataAccess
                     if (ud.Login == login && ud.PasswordHash == GetHash(passwd))
                     {
                         ud.LastLogin = DateTime.Now;
-                        AccountManager.CurrentUser = ud;
                         UpdateDataFile();
-                        return true;
+                        return ud;
                     }
                 }
 
-                return false;
+                return null;
             });
         }
 

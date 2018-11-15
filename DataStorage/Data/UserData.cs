@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SimpleReminder.Data
+namespace DataStorage.Models
 {
     [Serializable]
-    internal class UserData
+    public class UserData
     {
         public ulong Id { get; private set; }
 

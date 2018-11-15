@@ -1,23 +1,24 @@
 ﻿using System;
 using System.IO;
+using Tools;
 
-namespace Tools
+namespace SimpleReminder.Tools
 {
-    public static class FileFolderHelper
+    internal static class FileFolderHelper
     {
         private static readonly string AppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
-        public static readonly string ClientFolderPath =  Path.Combine(AppDataPath, "SimpleReminder");
+        internal static readonly string ClientFolderPath =  Path.Combine(AppDataPath, "SimpleReminder");
 
-        public static readonly string LogFolderPath = Path.Combine(ClientFolderPath, "Log");
+        internal static readonly string LogFolderPath = Path.Combine(ClientFolderPath, "Log");
 
-        public static readonly string LogFilepath = Path.Combine(LogFolderPath, "Log_" + DateTime.Now.ToShortDateString() + ".txt");
+        internal static readonly string LogFilepath = Path.Combine(LogFolderPath, "Log_" + DateTime.Now.ToShortDateString() + ".txt");
 
-        public static readonly string StorageFilePath = Path.Combine(ClientFolderPath, "DataStorage.bin");
+        internal static readonly string StorageFilePath = Path.Combine(ClientFolderPath, "DataStorage.bin");
 
-        public static readonly string LastUserFilePath = Path.Combine(ClientFolderPath, "LastUser.bin");
+        internal static readonly string LastUserFilePath = Path.Combine(ClientFolderPath, "LastUser.bin");
 
-        public static void CheckAndCreateFile(string filePath)
+        internal static void CheckAndCreateFile(string filePath)
         {
             try
             {
@@ -38,7 +39,7 @@ namespace Tools
             }
         }
 
-        public static void RemoveLastUserCache()
+        internal static void RemoveLastUserCache()
         {
             try
             {
