@@ -78,7 +78,7 @@ namespace DataStorage.Contexts
             {
                 Thread.Sleep(3 * 1000);
                 // Fetching last id
-                ulong lastId = _users.OrderBy(u => u.Id).Last().Id;
+                Int64 lastId = _users.OrderBy(u => u.Id).Last().Id;
                 // Init new user with id and hashed password
                 UserData dataWithId = new UserData(lastId, userData);
                 dataWithId.PasswordHash = GetHash(password);

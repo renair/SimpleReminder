@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity.ModelConfiguration;
 
 namespace DataStorage.Models
 {
@@ -13,6 +14,10 @@ namespace DataStorage.Models
         public DateTime SelectedDate { get; set; }
 
         public string ReminderText { get; set; }
+
+        public Int64 UserId { get; set; }
+
+        public UserData User { get; set; }
 
         // Make initialization to safe using without NullReferenceException.
         public ReminderData()
@@ -39,6 +44,28 @@ namespace DataStorage.Models
         public bool IsTimeCome()
         {
             return SelectedDate <= DateTime.Now;
+        }
+    }
+
+    internal class ReminderEntityConfiguration : EntityTypeConfiguration<ReminderData>
+    {
+        public ReminderEntityConfiguration()
+        {
+            ToTable("Remindings");
+            HasKey(r => r.Id);
+
+            Property(r => r.Id)
+                .HasColumnName("Id")
+                .IsRequired();
+            Property(r => r.ReminderText)
+                .HasColumnName("NotificationText")
+                .IsRequired();
+            Property(r => r.SelectedDate)
+                .HasColumnName("SelectedDate")
+                .IsRequired();
+            Property(r => r.UserId)
+                .HasColumnName("UserId")
+                .IsRequired();
         }
     }
 }

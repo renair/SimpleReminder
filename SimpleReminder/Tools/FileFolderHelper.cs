@@ -23,7 +23,7 @@ namespace SimpleReminder.Tools
             try
             {
                 FileInfo file = new FileInfo(filePath);
-                if (!file.Directory.Exists)
+                if (file.Directory != null && !file.Directory.Exists)
                 {
                     file.Directory.Create();
                 }
