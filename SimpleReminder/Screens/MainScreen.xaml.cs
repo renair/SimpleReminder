@@ -8,7 +8,7 @@ using DataStorage.Models;
 using SimpleReminder.Controlls;
 using SimpleReminder.Managers;
 using Tools;
-using IScreen = SimpleReminder.Tools.IScreen;
+using SimpleReminder.Tools;
 
 namespace SimpleReminder.Screens
 {
@@ -95,7 +95,7 @@ namespace SimpleReminder.Screens
         private async void AddButtonClick(object sender, RoutedEventArgs e)
         {
             // Configure empty ReminderData
-            ReminderData data = new ReminderData();
+            ReminderData data = new ReminderData(AccountManager.CurrentUser);
             data.SelectedDate = DateTime.Now.AddHours(1);
             data.ReminderText = "";
             // Add ReminderData to other user's notifications
@@ -260,7 +260,7 @@ namespace SimpleReminder.Screens
 
         private void LogOutButtonClick(object sender, RoutedEventArgs e)
         {
-            AccountManager.CurrentUser = null;
+            AccountManager.LogOut();
             NavigationManager.Navigate(Managers.Screens.SignIn);
             Logger.Log("User logged out.");
         }

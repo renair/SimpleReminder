@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using DataStorage.Contexts;
 using DataStorage.Models;
 using SimpleReminder.Managers;
 using Tools;
@@ -103,8 +102,11 @@ namespace SimpleReminder.ViewModels
             try
             {
                 LoaderManager.ShowLoader();
-                UserData registeredUser = await UserAccess.SignUp(registrationData, Password);
-                AccountManager.CurrentUser = registeredUser;
+                bool hasRegistered = await AccountManager.SignUp(registrationData, Password);
+                if (!hasRegistered)
+                {
+                    throw new Exception("AccountManager can't register new user");
+                }
                 NavigationManager.Navigate(Managers.Screens.Main);
             }
             catch (Exception e)

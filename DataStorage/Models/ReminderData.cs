@@ -19,16 +19,13 @@ namespace DataStorage.Models
 
         public UserData User { get; set; }
 
-        // Make initialization to safe using without NullReferenceException.
-        public ReminderData()
+        // Make initialization safe using without NullReferenceException.
+        public ReminderData(UserData user)
         {
             SelectedDate = DateTime.Now;
-        }
-
-        public ReminderData(Int64 id)
-        {
-            SelectedDate = DateTime.Now;
-            Id = id;
+            User = user;
+            UserId = user.Id;
+            user.Notifications.Add(this);
         }
 
         public int CompareTo(object obj)

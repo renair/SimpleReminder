@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using DataStorage.Contexts;
 using SimpleReminder.Managers;
 using SimpleReminder.Tools;
 
@@ -16,13 +15,12 @@ namespace SimpleReminder.Screens
         private async void loginButton_Click(object sender, RoutedEventArgs e)
         {
             LoaderManager.ShowLoader();
-            var user = await UserAccess.SignIn(loginBox.Text, passwordBox.Password);
+            var isLoggedIn = await AccountManager.SignIn(loginBox.Text, passwordBox.Password);
             LoaderManager.HideLoader();
 
             // If user exists and password is correct
-            if (user != null)
+            if (isLoggedIn)
             {
-                AccountManager.CurrentUser = user;
                 NavigationManager.Navigate(Managers.Screens.Main);
             }
             else

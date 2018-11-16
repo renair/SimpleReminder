@@ -28,18 +28,17 @@ namespace DataStorage.Models
             Notifications = new List<ReminderData>();
         }
 
-        public UserData(Int64 id, UserData copySrc = null)
-        {
-            Id = id;
-            if (copySrc == null) return;
-            Surname = copySrc.Surname;
-            Name = copySrc.Name;
-            Login = copySrc.Login;
-            PasswordHash = copySrc.PasswordHash;
-            LastLogin = copySrc.LastLogin;
-            Email = copySrc.Email;
-            Notifications = copySrc.Notifications;
-        }
+        //internal UserData( UserData copySrc = null)
+        //{
+        //    if (copySrc == null) return;
+        //    Surname = copySrc.Surname;
+        //    Name = copySrc.Name;
+        //    Login = copySrc.Login;
+        //    PasswordHash = copySrc.PasswordHash;
+        //    LastLogin = copySrc.LastLogin;
+        //    Email = copySrc.Email;
+        //    Notifications = copySrc.Notifications;
+        //}
     }
 
     internal class UserEntityConfiguration : EntityTypeConfiguration<UserData>

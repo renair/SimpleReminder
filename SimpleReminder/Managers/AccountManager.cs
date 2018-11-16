@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Threading;
 using System.Threading.Tasks;
-using DataStorage.Contexts;
+using DataStorage.DataAccess;
 using DataStorage.Models;
 using Tools;
-using FileFolderHelper = SimpleReminder.Tools.FileFolderHelper;
 
 namespace SimpleReminder.Managers
 {
@@ -15,7 +13,7 @@ namespace SimpleReminder.Managers
         public static UserData CurrentUser
         {
             get { return _currentUser; }
-            set
+            private set
             {
                 _currentUser = value;
                 if (value == null)
@@ -49,65 +47,55 @@ namespace SimpleReminder.Managers
             _currentUser = userCandidate;
         }
 
-        // Simulate REST api call
-        public static Task<bool> AddReminding(ReminderData data)
+        public static Task<bool> SignIn(string login, string password)
         {
             return Task.Run(() =>
             {
-                Thread.Sleep(250);
-                CurrentUser.Notifications.Add(data);
-                try
+                UserData data = DbAccessor.SignIn(login, password);
+                if (data != null)
                 {
-                    Serializer.Serialize(_currentUser, FileFolderHelper.LastUserFilePath);
-                    UserAccess.UpdateDataFile();
+                    CurrentUser = data;
+                    return true;
                 }
-                catch (Exception e)
-                {
-                    Logger.Log("Can't serialize current user", e);
-                }
-                return true;
+                return false;
             });
+        }
+
+        public static Task<bool> SignUp(UserData data, string password)
+        {
+            return Task.Run(() =>
+            {
+                UserData signedUser = DbAccessor.SignUp(data, password);
+                if (signedUser != null)
+                {
+                    CurrentUser = signedUser;
+                    return true;
+                }
+                return false;
+            });
+        }
+
+        public static Task LogOut()
+        {
+            return Task.Run(() => { CurrentUser = null; });
+        }
+
+        // Simulate REST api call
+        public static Task<bool> AddReminding(ReminderData data)
+        {
+            return Task.Run(() => DbAccessor.AddNotification(data));
         }
 
         // Simulate REST api call
         public static Task<bool> DeleteReminding(ReminderData data)
         {
-            return Task.Run(() =>
-            {
-                Thread.Sleep(250);
-                bool result = CurrentUser.Notifications.Remove(data);
-                try
-                {
-                    Serializer.Serialize(_currentUser, FileFolderHelper.LastUserFilePath);
-                    UserAccess.UpdateDataFile();
-                }
-                catch (Exception e)
-                {
-                    Logger.Log("Can't serialize current user", e);
-                }
-                return result;
-            });
+            return Task.Run(() => DbAccessor.RemoveNotification(data));
         }
 
         // Simulate REST api call
         public static Task<bool> UpdateReminding(ReminderData data)
         {
-            // Do nothing here, because data will be updated via reference
-            // This method ONLY for future using with REST api
-            return Task.Run(() =>
-            {
-                Thread.Sleep(250);
-                try
-                {
-                    Serializer.Serialize(_currentUser, FileFolderHelper.LastUserFilePath);
-                    UserAccess.UpdateDataFile();
-                }
-                catch (Exception e)
-                {
-                    Logger.Log("Can't serialize current user", e);
-                }
-                return true;
-            });
+            return Task.Run(() => DbAccessor.UpdateNotification(data));
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using SimpleReminder.Managers;
-using SimpleReminder.Tools;
 using SimpleReminder.ViewModels;
 using Tools;
 

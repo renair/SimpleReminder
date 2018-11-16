@@ -66,7 +66,6 @@
     <Compile Include="Screens\RegisterScreen.xaml.cs">
       <DependentUpon>RegisterScreen.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Tools\FileFolderHelper.cs" />
     <Compile Include="Tools\ILoaderOwner.cs" />
     <Compile Include="Tools\IScreen.cs" />
     <Compile Include="ViewModels\LoaderViewModel.cs" />
