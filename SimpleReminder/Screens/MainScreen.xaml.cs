@@ -143,17 +143,24 @@ namespace SimpleReminder.Screens
         {
             try
             {
-                lock (_remindings)
-                {
-                    NotificationsContainer.Children.Remove(ctrl);
-                    _remindings.Remove(ctrl.ReminderData);
-                }
-
                 LoaderManager.ShowLoader();
-                await AccountManager.DeleteReminding(ctrl.ReminderData);
+                var isDeleted = await AccountManager.DeleteReminding(ctrl.ReminderData);
                 LoaderManager.HideLoader();
 
-                Logger.Log("Notification removed.");
+                if (isDeleted)
+                {
+                    lock (_remindings)
+                    {
+                        NotificationsContainer.Children.Remove(ctrl);
+                        _remindings.Remove(ctrl.ReminderData);
+                    }
+                    Logger.Log("Notification removed.");
+                }
+                else
+                {
+                    Logger.Log("Can't remove notification.");
+                    MessageBox.Show("Can't remove notification.");
+                }
             }
             catch(ArgumentNullException ex)
             {
@@ -204,17 +211,25 @@ namespace SimpleReminder.Screens
             NotificationEditorContentControll.Content = null;
             try
             {
-                lock(_remindings)
-                {
-                    // Remove controll from all notifications controlls
-                    NotificationsContainer.Children.Remove(_remindings[data]);
-                    // Remove data with controll because we dont't need it anymore 
-                    _remindings.Remove(data);
-                }
-
                 LoaderManager.ShowLoader();
-                await AccountManager.DeleteReminding(data);
+                var isDeleted = await AccountManager.DeleteReminding(data);
                 LoaderManager.HideLoader();
+                if (isDeleted)
+                {
+                    lock (_remindings)
+                    {
+                        // Remove controll from all notifications controlls
+                        NotificationsContainer.Children.Remove(_remindings[data]);
+                        // Remove data with controll because we dont't need it anymore 
+                        _remindings.Remove(data);
+                    }
+                    Logger.Log("Notification removed.");
+                }
+                else
+                {
+                    Logger.Log("Can't remove notification!");
+                    MessageBox.Show("Can't remove notification!");
+                }
             }
             catch(ArgumentNullException)
             {

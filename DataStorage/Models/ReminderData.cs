@@ -18,6 +18,12 @@ namespace DataStorage.Models
         public Int64 UserId { get; set; }
 
         public UserData User { get; set; }
+        
+        //This constructor will be used by EF
+        public ReminderData()
+        {
+            SelectedDate = DateTime.Now;
+        }
 
         // Make initialization safe using without NullReferenceException.
         public ReminderData(UserData user)

@@ -12,7 +12,7 @@ namespace DataStorage.DataAccess
         }
 
         public DbSet<UserData> Users { get; set; }
-        public DbSet<ReminderData> Wallets { get; set; }
+        public DbSet<ReminderData> Remindings { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

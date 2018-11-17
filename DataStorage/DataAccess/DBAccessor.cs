@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
@@ -45,6 +46,22 @@ namespace DataStorage.DataAccess
             }
         }
 
+        public static List<ReminderData> GetUserNotifications(Int64 userId)
+        {
+            using (var db = new ReminderDBContext())
+            {
+                try
+                {
+                    return db.Remindings.Where(r => r.UserId == userId).ToList();
+                }
+                catch (Exception e)
+                {
+                    Logger.Log("Can't get user notifications!", e);
+                    return null;
+                }
+            }
+        }
+
         public static UserData SignUp(UserData userData, string password)
         {
             using (var db = new ReminderDBContext())
@@ -52,7 +69,12 @@ namespace DataStorage.DataAccess
                 try
                 {
                     userData.PasswordHash = GetHash(password);
-                    // Add to global users storage and update storage
+
+                    if (db.Users.Any(u => u.Login == userData.Login))
+                    {
+                        return null;
+                    }
+
                     UserData dataFromDb = db.Users.Add(userData);
                     db.SaveChanges();
                     return dataFromDb;
@@ -73,9 +95,9 @@ namespace DataStorage.DataAccess
                 {
                     UserData attachedUser = data.User;
                     data.User = null;
-                    db.Wallets.Add(data);
-                    data.User = attachedUser;
+                    db.Remindings.Add(data);
                     db.SaveChanges();
+                    data.User = attachedUser;
                     return true;
                 }
                 catch (Exception e)
@@ -94,9 +116,9 @@ namespace DataStorage.DataAccess
                 {
                     UserData attachedUser = data.User;
                     data.User = null;
-                    db.Wallets.Remove(data);
-                    data.User = attachedUser;
+                    db.Entry(data).State = EntityState.Deleted;
                     db.SaveChanges();
+                    data.User = attachedUser;
                     return true;
                 }
                 catch (Exception e)
@@ -115,9 +137,9 @@ namespace DataStorage.DataAccess
                 {
                     UserData attachedUser = data.User;
                     data.User = null;
-                    db.Wallets.AddOrUpdate(data);
-                    data.User = attachedUser;
+                    db.Remindings.AddOrUpdate(data);
                     db.SaveChanges();
+                    data.User = attachedUser;
                     return true;
                 }
                 catch (Exception e)

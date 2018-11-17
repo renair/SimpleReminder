@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
 using DataStorage.Models;
 using SimpleReminder.Managers;
@@ -97,7 +98,8 @@ namespace SimpleReminder.ViewModels
                 Login = Login,
                 Name = Name,
                 Surname = Surname,
-                Email = Email
+                Email = Email,
+                LastLogin = DateTime.Now
             };
             try
             {
@@ -105,7 +107,8 @@ namespace SimpleReminder.ViewModels
                 bool hasRegistered = await AccountManager.SignUp(registrationData, Password);
                 if (!hasRegistered)
                 {
-                    throw new Exception("AccountManager can't register new user");
+                    MessageBox.Show("Can't register new user. Login already taken.");
+                    throw new Exception("Can't register new user. Login already taken.");
                 }
                 NavigationManager.Navigate(Managers.Screens.Main);
             }

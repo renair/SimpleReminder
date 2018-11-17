@@ -38,6 +38,13 @@ namespace SimpleReminder.Managers
             try
             {
                 userCandidate = Serializer.Deserialize<UserData>(FileFolderHelper.LastUserFilePath);
+                LoaderManager.ShowLoader();
+                var userNotifications = DbAccessor.GetUserNotifications(userCandidate.Id);
+                if (userNotifications != null)
+                {
+                    userCandidate.Notifications = userNotifications;
+                }
+                LoaderManager.HideLoader();
             }
             catch (Exception ex)
             {
