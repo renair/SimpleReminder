@@ -50,9 +50,9 @@
   <ItemGroup>
     <Compile Include="Contexts\ReminderDBContext.cs" />
     <Compile Include="DataAccess\DBAccessor.cs" />
-    <Compile Include="Migrations\201811162220385_NewMigration.cs" />
-    <Compile Include="Migrations\201811162220385_NewMigration.Designer.cs">
-      <DependentUpon>201811162220385_NewMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201811171901149_NewMigration.cs" />
+    <Compile Include="Migrations\201811171901149_NewMigration.Designer.cs">
+      <DependentUpon>201811171901149_NewMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ReminderData.cs" />
@@ -70,8 +70,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201811162220385_NewMigration.resx">
-      <DependentUpon>201811162220385_NewMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201811171901149_NewMigration.resx">
+      <DependentUpon>201811171901149_NewMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

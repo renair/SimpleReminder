@@ -4,11 +4,11 @@ using DataStorage.Models;
 
 namespace DataStorage.DataAccess
 {
-    class ReminderDBContext : DbContext
+    class ReminderDbContext : DbContext
     {
-        public ReminderDBContext() : base("ReminderDataBase")
+        public ReminderDbContext() : base("ReminderDataBase")
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ReminderDBContext, Configuration>());
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ReminderDbContext, Configuration>());
         }
 
         public DbSet<UserData> Users { get; set; }

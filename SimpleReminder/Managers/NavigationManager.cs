@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Controls;
 using SimpleReminder.Screens;
 using SimpleReminder.Tools;
 

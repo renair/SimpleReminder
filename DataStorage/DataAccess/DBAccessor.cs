@@ -31,7 +31,7 @@ namespace DataStorage.DataAccess
         // Check if thre is account with given login and password
         public static UserData SignIn(string login, string passwd)
         {
-            using (var db = new ReminderDBContext())
+            using (var db = new ReminderDbContext())
             {
                 try
                 {
@@ -48,7 +48,7 @@ namespace DataStorage.DataAccess
 
         public static List<ReminderData> GetUserNotifications(Int64 userId)
         {
-            using (var db = new ReminderDBContext())
+            using (var db = new ReminderDbContext())
             {
                 try
                 {
@@ -64,7 +64,7 @@ namespace DataStorage.DataAccess
 
         public static UserData SignUp(UserData userData, string password)
         {
-            using (var db = new ReminderDBContext())
+            using (var db = new ReminderDbContext())
             {
                 try
                 {
@@ -89,7 +89,7 @@ namespace DataStorage.DataAccess
 
         public static bool AddNotification(ReminderData data)
         {
-            using (var db = new ReminderDBContext())
+            using (var db = new ReminderDbContext())
             {
                 try
                 {
@@ -110,7 +110,7 @@ namespace DataStorage.DataAccess
 
         public static bool RemoveNotification(ReminderData data)
         {
-            using (var db = new ReminderDBContext())
+            using (var db = new ReminderDbContext())
             {
                 try
                 {
@@ -131,7 +131,7 @@ namespace DataStorage.DataAccess
 
         public static bool UpdateNotification(ReminderData data)
         {
-            using (var db = new ReminderDBContext())
+            using (var db = new ReminderDbContext())
             {
                 try
                 {

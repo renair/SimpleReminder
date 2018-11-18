@@ -1,12 +1,24 @@
 namespace DataStorage.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
     
     public partial class NewMigration : DbMigration
     {
         public override void Up()
         {
+            CreateTable(
+                "dbo.Remindings",
+                c => new
+                    {
+                        Id = c.Long(nullable: false, identity: true),
+                        SelectedDate = c.DateTime(nullable: false),
+                        NotificationText = c.String(nullable: false),
+                        UserId = c.Long(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Users", t => t.UserId, cascadeDelete: true)
+                .Index(t => t.UserId);
+            
             CreateTable(
                 "dbo.Users",
                 c => new
@@ -21,27 +33,14 @@ namespace DataStorage.Migrations
                     })
                 .PrimaryKey(t => t.Id);
             
-            CreateTable(
-                "dbo.Remindings",
-                c => new
-                    {
-                        Id = c.Long(nullable: false, identity: true),
-                        SelectedDate = c.DateTime(nullable: false),
-                        NotificationText = c.String(nullable: false),
-                        UserId = c.Long(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Users", t => t.UserId, cascadeDelete: true)
-                .Index(t => t.UserId);
-            
         }
         
         public override void Down()
         {
             DropForeignKey("dbo.Remindings", "UserId", "dbo.Users");
             DropIndex("dbo.Remindings", new[] { "UserId" });
-            DropTable("dbo.Remindings");
             DropTable("dbo.Users");
+            DropTable("dbo.Remindings");
         }
     }
 }
