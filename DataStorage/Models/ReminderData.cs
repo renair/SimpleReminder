@@ -6,7 +6,7 @@ namespace DataStorage.Models
     [Serializable]
     public class ReminderData : IComparable
     {
-        // Private parts with data
+        private UserData _user;
 
         // Properties for private fields
         public long Id { get; internal set; }
@@ -15,10 +15,18 @@ namespace DataStorage.Models
 
         public string ReminderText { get; set; }
 
-        public Int64 UserId { get; set; }
+        public Int64 UserId { get; internal set; }
 
-        public UserData User { get; set; }
-        
+        public UserData User
+        {
+            get { return _user; }
+            set
+            {
+                _user = value;
+                UserId = value.Id;
+            }
+        }
+
         //This constructor will be used by EF
         public ReminderData()
         {
