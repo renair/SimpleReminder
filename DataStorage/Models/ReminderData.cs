@@ -9,7 +9,7 @@ namespace DataStorage.Models
         // Private parts with data
 
         // Properties for private fields
-        public long Id { get; private set; }
+        public long Id { get; internal set; }
 
         public DateTime SelectedDate { get; set; }
 

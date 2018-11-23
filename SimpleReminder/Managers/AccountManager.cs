@@ -9,6 +9,7 @@ namespace SimpleReminder.Managers
     static class AccountManager
     {
         private static UserData _currentUser;
+        private static IDataAccess _dataAccessor;
 
         public static UserData CurrentUser
         {
@@ -35,11 +36,12 @@ namespace SimpleReminder.Managers
         static AccountManager()
         {
             UserData userCandidate;
+            _dataAccessor = new DbAccessor();
             try
             {
                 userCandidate = Serializer.Deserialize<UserData>(FileFolderHelper.LastUserFilePath);
                 LoaderManager.ShowLoader();
-                var userNotifications = DbAccessor.GetUserNotifications(userCandidate.Id);
+                var userNotifications = _dataAccessor.GetUserNotifications(userCandidate.Id);
                 if (userNotifications != null)
                 {
                     userCandidate.Notifications = userNotifications;
@@ -58,7 +60,7 @@ namespace SimpleReminder.Managers
         {
             return Task.Run(() =>
             {
-                UserData data = DbAccessor.SignIn(login, password);
+                UserData data = _dataAccessor.SignIn(login, password);
                 if (data != null)
                 {
                     CurrentUser = data;
@@ -72,7 +74,7 @@ namespace SimpleReminder.Managers
         {
             return Task.Run(() =>
             {
-                UserData signedUser = DbAccessor.SignUp(data, password);
+                UserData signedUser = _dataAccessor.SignUp(data, password);
                 if (signedUser != null)
                 {
                     CurrentUser = signedUser;
@@ -90,19 +92,19 @@ namespace SimpleReminder.Managers
         // Simulate REST api call
         public static Task<bool> AddReminding(ReminderData data)
         {
-            return Task.Run(() => DbAccessor.AddNotification(data));
+            return Task.Run(() => _dataAccessor.AddNotification(data));
         }
 
         // Simulate REST api call
         public static Task<bool> DeleteReminding(ReminderData data)
         {
-            return Task.Run(() => DbAccessor.RemoveNotification(data));
+            return Task.Run(() => _dataAccessor.RemoveNotification(data));
         }
 
         // Simulate REST api call
         public static Task<bool> UpdateReminding(ReminderData data)
         {
-            return Task.Run(() => DbAccessor.UpdateNotification(data));
+            return Task.Run(() => _dataAccessor.UpdateNotification(data));
         }
     }
 }

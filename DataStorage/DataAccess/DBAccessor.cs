@@ -10,13 +10,11 @@ using Tools;
 
 namespace DataStorage.DataAccess
 {
-    // Just test case. In future will replace with DB or remote
-    // API equests.
-    public static class DbAccessor
+    public class DbAccessor : IDataAccess
     {
         // Method to get has as string from string.
         // Writed for hashing passwords.
-        private static string GetHash(string s)
+        private string GetHash(string s)
         {
             HashAlgorithm algorithm = SHA256.Create();
             byte[] bytes = algorithm.ComputeHash(Encoding.UTF8.GetBytes(s));
@@ -29,7 +27,7 @@ namespace DataStorage.DataAccess
         }
 
         // Check if thre is account with given login and password
-        public static UserData SignIn(string login, string passwd)
+        public UserData SignIn(string login, string passwd)
         {
             using (var db = new ReminderDbContext())
             {
@@ -46,7 +44,7 @@ namespace DataStorage.DataAccess
             }
         }
 
-        public static List<ReminderData> GetUserNotifications(Int64 userId)
+        public List<ReminderData> GetUserNotifications(Int64 userId)
         {
             using (var db = new ReminderDbContext())
             {
@@ -62,7 +60,7 @@ namespace DataStorage.DataAccess
             }
         }
 
-        public static UserData SignUp(UserData userData, string password)
+        public UserData SignUp(UserData userData, string password)
         {
             using (var db = new ReminderDbContext())
             {
@@ -87,7 +85,7 @@ namespace DataStorage.DataAccess
             }
         }
 
-        public static bool AddNotification(ReminderData data)
+        public bool AddNotification(ReminderData data)
         {
             using (var db = new ReminderDbContext())
             {
@@ -108,7 +106,7 @@ namespace DataStorage.DataAccess
             }
         }
 
-        public static bool RemoveNotification(ReminderData data)
+        public bool RemoveNotification(ReminderData data)
         {
             using (var db = new ReminderDbContext())
             {
@@ -129,7 +127,7 @@ namespace DataStorage.DataAccess
             }
         }
 
-        public static bool UpdateNotification(ReminderData data)
+        public bool UpdateNotification(ReminderData data)
         {
             using (var db = new ReminderDbContext())
             {
