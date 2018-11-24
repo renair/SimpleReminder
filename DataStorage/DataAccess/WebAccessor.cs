@@ -39,9 +39,9 @@ namespace DataStorage.DataAccess
                     Logger.Log("Call 'authorize' endpoint unsuccesfull");
                     return null;
                 }
-                //TODO fix a constant error when parsing returned data
+
                 UserDto userData = response.Content.ReadAsAsync<UserDto>().GetAwaiter().GetResult();
-                Logger.Log("userData:'" + userData.ToString() + "'");
+                //string s = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 return userData.ToUserData();
             }
             catch (Exception e)
@@ -83,7 +83,9 @@ namespace DataStorage.DataAccess
                     Logger.Log("Call 'user_notification' endpoint unsuccesfull");
                     return null;
                 }
-                List<NotificationDto> notifications = response.Content.ReadAsAsync<List<NotificationDto>>().GetAwaiter().GetResult();
+
+                List<NotificationDto> notifications = null; //response.Content.ReadAsAsync<List<NotificationDto>>().GetAwaiter().GetResult();
+                string s = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 List<ReminderData> result = new List<ReminderData>();
                 foreach (NotificationDto notification in notifications)
                 {
@@ -170,10 +172,10 @@ namespace DataStorage.DataAccess
 
         private class NotificationDto
         {
-            public long Id { get; private set; }
-            public long UnixSelectedDate { get; private set; }
-            public string ReminderText { get; private set; }
-            public Int64 UserId { get; private set; }
+            public long Id { get; set; }
+            public long UnixSelectedDate { get; set; }
+            public string ReminderText { get; set; }
+            public Int64 UserId { get; set; }
 
             public NotificationDto()
             {}
