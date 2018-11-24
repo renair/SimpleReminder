@@ -23,10 +23,13 @@ namespace DataStorage.DataAccess
         // Check if thre is account with given login and password
         public UserData SignIn(string login, string passwd)
         {
+            //TODO fix creating new UserData object just for encrypting password
+            UserData user = new UserData();
+            user.Password = passwd;
             var authData = new
             {
                 Login = login,
-                Password = passwd
+                Password = user.PasswordHash
             };
             try
             {
@@ -36,7 +39,9 @@ namespace DataStorage.DataAccess
                     Logger.Log("Call 'authorize' endpoint unsuccesfull");
                     return null;
                 }
+                //TODO fix a constant error when parsing returned data
                 UserDto userData = response.Content.ReadAsAsync<UserDto>().GetAwaiter().GetResult();
+                Logger.Log("userData:'" + userData.ToString() + "'");
                 return userData.ToUserData();
             }
             catch (Exception e)
@@ -50,6 +55,7 @@ namespace DataStorage.DataAccess
         {
             try
             {
+                userData.Password = password;
                 UserDto dto = new UserDto(userData);
                 HttpResponseMessage response = _client.PostAsJsonAsync("register", dto).GetAwaiter().GetResult();
                 if (response.StatusCode != HttpStatusCode.OK)
@@ -103,6 +109,7 @@ namespace DataStorage.DataAccess
                     Logger.Log("Call 'add_notification' endpoint unsuccesfull");
                     return false;
                 }
+                data.Id = response.Content.ReadAsAsync<int>().GetAwaiter().GetResult();
                 return true;
             }
             catch (Exception e)

@@ -36,7 +36,7 @@ namespace SimpleReminder.Managers
         static AccountManager()
         {
             UserData userCandidate;
-            _dataAccessor = new DbAccessor();
+            _dataAccessor = new WebAccessor("http://localhost:8080");
             try
             {
                 userCandidate = Serializer.Deserialize<UserData>(FileFolderHelper.LastUserFilePath);
