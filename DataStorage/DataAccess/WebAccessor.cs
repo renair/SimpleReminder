@@ -175,6 +175,9 @@ namespace DataStorage.DataAccess
             public string ReminderText { get; private set; }
             public Int64 UserId { get; private set; }
 
+            public NotificationDto()
+            {}
+
             public NotificationDto(ReminderData data)
             {
                 Id = data.Id;
@@ -206,6 +209,11 @@ namespace DataStorage.DataAccess
             public Int64 LastLogin { get; set; }
             public List<NotificationDto> Notifications { get; set; }
             public string Email { get; set; }
+
+            public UserDto()
+            {
+                Notifications = new List<NotificationDto>();
+            }
 
             public UserDto(UserData data)
             {
