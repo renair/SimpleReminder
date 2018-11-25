@@ -13,9 +13,11 @@ namespace DataStorage.DataAccess
         private readonly HttpClient _client;
 
         public WebAccessor(string baseUri)
-        { 
-            _client = new HttpClient();
-            _client.BaseAddress = new Uri(baseUri);
+        {
+            _client = new HttpClient
+            {
+                BaseAddress = new Uri(baseUri)
+            };
             _client.DefaultRequestHeaders.Accept.Clear();
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
@@ -23,13 +25,10 @@ namespace DataStorage.DataAccess
         // Check if thre is account with given login and password
         public UserData SignIn(string login, string passwd)
         {
-            //TODO fix creating new UserData object just for encrypting password
-            UserData user = new UserData();
-            user.Password = passwd;
             var authData = new
             {
                 Login = login,
-                Password = user.PasswordHash
+                Password = Encryption.GetHash(passwd)
             };
             try
             {
@@ -51,11 +50,10 @@ namespace DataStorage.DataAccess
             return null;
         }
 
-        public UserData SignUp(UserData userData, string password)
+        public UserData SignUp(UserData userData)
         {
             try
             {
-                userData.Password = password;
                 UserDto dto = new UserDto(userData);
                 HttpResponseMessage response = _client.PostAsJsonAsync("register", dto).GetAwaiter().GetResult();
                 if (response.StatusCode != HttpStatusCode.OK)
@@ -63,8 +61,8 @@ namespace DataStorage.DataAccess
                     Logger.Log("Call 'register' endpoint unsuccesfull");
                     return null;
                 }
-                dto.Id = response.Content.ReadAsAsync<int>().GetAwaiter().GetResult();
-                return dto.ToUserData();
+                userData.Id = response.Content.ReadAsAsync<int>().GetAwaiter().GetResult();
+                return userData;
             }
             catch (Exception e)
             {
@@ -84,8 +82,7 @@ namespace DataStorage.DataAccess
                     return null;
                 }
 
-                List<NotificationDto> notifications = null; //response.Content.ReadAsAsync<List<NotificationDto>>().GetAwaiter().GetResult();
-                string s = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                List<NotificationDto> notifications = response.Content.ReadAsAsync<List<NotificationDto>>().GetAwaiter().GetResult();
                 List<ReminderData> result = new List<ReminderData>();
                 foreach (NotificationDto notification in notifications)
                 {
@@ -177,6 +174,7 @@ namespace DataStorage.DataAccess
             public string ReminderText { get; set; }
             public Int64 UserId { get; set; }
 
+            // ReSharper disable once UnusedMember.Local
             public NotificationDto()
             {}
 
@@ -212,6 +210,7 @@ namespace DataStorage.DataAccess
             public List<NotificationDto> Notifications { get; set; }
             public string Email { get; set; }
 
+            // ReSharper disable once UnusedMember.Local
             public UserDto()
             {
                 Notifications = new List<NotificationDto>();

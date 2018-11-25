@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
-using System.Security.Cryptography;
-using System.Text;
+using Tools;
 
 namespace DataStorage.Models
 {
     [Serializable]
     public class UserData
     {
-        private string _password;
-
         public Int64 Id { get; internal set; }
 
         public string Surname { get; set; }
@@ -25,8 +22,7 @@ namespace DataStorage.Models
         {
             set
             {
-                _password = value;
-                PasswordHash = GetHash(value);
+                PasswordHash = Encryption.GetHash(value);
             }
         }
 
@@ -39,18 +35,6 @@ namespace DataStorage.Models
         public UserData()
         {
             Notifications = new List<ReminderData>();
-        }
-
-        private string GetHash(string s)
-        {
-            HashAlgorithm algorithm = SHA256.Create();
-            byte[] bytes = algorithm.ComputeHash(Encoding.UTF8.GetBytes(s));
-            StringBuilder builder = new StringBuilder();
-            foreach (byte b in bytes)
-            {
-                builder.Append(b.ToString("X2"));
-            }
-            return builder.ToString();
         }
     }
 

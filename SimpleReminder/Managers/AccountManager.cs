@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using DataStorage.DataAccess;
 using DataStorage.Models;
 using Tools;
+using System.Configuration;
 
 namespace SimpleReminder.Managers
 {
@@ -36,24 +37,30 @@ namespace SimpleReminder.Managers
         static AccountManager()
         {
             UserData userCandidate;
-            _dataAccessor = new WebAccessor("http://localhost:8080");
+            _dataAccessor = new WebAccessor(ConfigurationManager.AppSettings["ServerHost"]);
             try
             {
                 userCandidate = Serializer.Deserialize<UserData>(FileFolderHelper.LastUserFilePath);
                 LoaderManager.ShowLoader();
                 var userNotifications = _dataAccessor.GetUserNotifications(userCandidate.Id);
-                if (userNotifications != null)
+                if (userNotifications == null)
                 {
-                    userCandidate.Notifications = userNotifications;
+                    Logger.Log("Remote API don't response");
+                    CurrentUser = null;
+                    return;
                 }
-                LoaderManager.HideLoader();
+                userCandidate.Notifications = userNotifications;
             }
             catch (Exception ex)
             {
                 userCandidate = null;
                 Logger.Log("Failed to deserialize last user", ex);
             }
-            _currentUser = userCandidate;
+            finally
+            {
+                LoaderManager.HideLoader();
+            }
+            CurrentUser = userCandidate;
         }
 
         public static Task<bool> SignIn(string login, string password)
@@ -70,11 +77,11 @@ namespace SimpleReminder.Managers
             });
         }
 
-        public static Task<bool> SignUp(UserData data, string password)
+        public static Task<bool> SignUp(UserData data)
         {
             return Task.Run(() =>
             {
-                UserData signedUser = _dataAccessor.SignUp(data, password);
+                UserData signedUser = _dataAccessor.SignUp(data);
                 if (signedUser != null)
                 {
                     CurrentUser = signedUser;

@@ -23,22 +23,22 @@ namespace DataStorage.Models
             set
             {
                 _user = value;
-                UserId = value.Id;
+                if (value != null)
+                {
+                    UserId = value.Id;
+                }
             }
         }
 
         //This constructor will be used by EF
         public ReminderData()
-        {
-            SelectedDate = DateTime.Now;
-        }
+        {}
 
         // Make initialization safe using without NullReferenceException.
         public ReminderData(UserData user)
         {
             SelectedDate = DateTime.Now;
             User = user;
-            UserId = user.Id;
             user.Notifications.Add(this);
         }
 

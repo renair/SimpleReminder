@@ -8,7 +8,7 @@ namespace DataStorage.DataAccess
     {
         UserData SignIn(string login, string passwd);
         List<ReminderData> GetUserNotifications(Int64 userId);
-        UserData SignUp(UserData userData, string password);
+        UserData SignUp(UserData userData);
         bool AddNotification(ReminderData data);
         bool RemoveNotification(ReminderData data);
         bool UpdateNotification(ReminderData data);

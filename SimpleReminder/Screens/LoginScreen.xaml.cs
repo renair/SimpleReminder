@@ -25,7 +25,7 @@ namespace SimpleReminder.Screens
             }
             else
             {
-                MessageBox.Show("Application works in test mode.\nPassword: andrew\nLogin: andrew");
+                MessageBox.Show("Can't login to account.");
             }
         }
 

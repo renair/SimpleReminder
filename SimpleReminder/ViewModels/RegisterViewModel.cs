@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 using DataStorage.Models;
@@ -14,11 +15,11 @@ namespace SimpleReminder.ViewModels
         private ICommand _registerCommand;
         private ICommand _backToLogInCommand;
 
-        private string _surname;
-        private string _name;
-        private string _login;
-        private string _password;
-        private string _email;
+        private string _surname = "";
+        private string _name = "";
+        private string _login = "";
+        private string _password = "";
+        private string _email = "";
 
         public string Surname
         {
@@ -96,6 +97,7 @@ namespace SimpleReminder.ViewModels
             UserData registrationData = new UserData
             {
                 Login = Login,
+                Password = Password,
                 Name = Name,
                 Surname = Surname,
                 Email = Email,
@@ -104,11 +106,11 @@ namespace SimpleReminder.ViewModels
             try
             {
                 LoaderManager.ShowLoader();
-                bool hasRegistered = await AccountManager.SignUp(registrationData, Password);
+                bool hasRegistered = await AccountManager.SignUp(registrationData);
                 if (!hasRegistered)
                 {
-                    MessageBox.Show("Can't register new user. Login already taken.");
-                    throw new Exception("Can't register new user. Login already taken.");
+                    MessageBox.Show("Can't register new user. Login already taken or server unavailable.");
+                    throw new Exception("Can't register new user. Login already taken or server unavailable.");
                 }
                 NavigationManager.Navigate(Managers.Screens.Main);
             }
@@ -124,7 +126,9 @@ namespace SimpleReminder.ViewModels
 
         private bool CanRegister(object obj)
         {
-            return Login != "" && Name != "" && Surname != "" && Email != "" && Password != "";
+            bool isFieldsContainsText = Login != "" && Name != "" && Surname != "" && Email != "" && Password != "";
+            bool isEmailMatch = Regex.IsMatch(Email, @"^[A-z_\-0-9]{3,}@([A-z0-9]+\.){1,}[A-z0-9]+$");
+            return isFieldsContainsText && isEmailMatch;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
+using DataStorage.Contexts;
 using DataStorage.Models;
 using Tools;
 
@@ -12,20 +11,6 @@ namespace DataStorage.DataAccess
 {
     public class DbAccessor : IDataAccess
     {
-        // Method to get has as string from string.
-        // Writed for hashing passwords.
-        private string GetHash(string s)
-        {
-            HashAlgorithm algorithm = SHA256.Create();
-            byte[] bytes = algorithm.ComputeHash(Encoding.UTF8.GetBytes(s));
-            StringBuilder builder = new StringBuilder();
-            foreach(byte b in bytes)
-            {
-                builder.Append(b.ToString("X2"));
-            }
-            return builder.ToString();
-        }
-
         // Check if thre is account with given login and password
         public UserData SignIn(string login, string passwd)
         {
@@ -33,7 +18,7 @@ namespace DataStorage.DataAccess
             {
                 try
                 {
-                    string hashedPassword = GetHash(passwd);
+                    string hashedPassword = Encryption.GetHash(passwd);
                     return db.Users.Include(u => u.Notifications).FirstOrDefault(u => u.Login == login && u.PasswordHash == hashedPassword);
                 }
                 catch (Exception e)
@@ -60,14 +45,12 @@ namespace DataStorage.DataAccess
             }
         }
 
-        public UserData SignUp(UserData userData, string password)
+        public UserData SignUp(UserData userData)
         {
             using (var db = new ReminderDbContext())
             {
                 try
                 {
-                    userData.PasswordHash = GetHash(password);
-
                     if (db.Users.Any(u => u.Login == userData.Login))
                     {
                         return null;

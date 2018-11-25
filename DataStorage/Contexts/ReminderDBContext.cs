@@ -2,7 +2,7 @@
 using DataStorage.Migrations;
 using DataStorage.Models;
 
-namespace DataStorage.DataAccess
+namespace DataStorage.Contexts
 {
     class ReminderDbContext : DbContext
     {

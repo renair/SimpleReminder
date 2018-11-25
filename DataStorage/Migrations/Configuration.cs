@@ -1,15 +1,17 @@
+using DataStorage.Contexts;
+
 namespace DataStorage.Migrations
 {
     using System.Data.Entity.Migrations;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<DataAccess.ReminderDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ReminderDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(DataAccess.ReminderDbContext context)
+        protected override void Seed(ReminderDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
