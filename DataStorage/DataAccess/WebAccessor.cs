@@ -40,7 +40,6 @@ namespace DataStorage.DataAccess
                 }
 
                 UserDto userData = response.Content.ReadAsAsync<UserDto>().GetAwaiter().GetResult();
-                //string s = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 return userData.ToUserData();
             }
             catch (Exception e)
