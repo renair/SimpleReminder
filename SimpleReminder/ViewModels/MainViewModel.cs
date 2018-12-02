@@ -14,10 +14,37 @@ namespace SimpleReminder.ViewModels
     {
         #region Fields
         private ObservableCollection<NotificationControl> _notifications;
+        private bool _isEditorVisible;
+        private ReminderData _editedValue;
         
         public ObservableCollection<NotificationControl> Notifications
         {
             get { return _notifications; }
+            private set
+            {
+                _notifications = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsEditorVisible
+        {
+            get { return _isEditorVisible; }
+            set
+            {
+                _isEditorVisible = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ReminderData EditedValue
+        {
+            get { return _editedValue; }
+            set
+            {
+                _editedValue = value;
+                OnPropertyChanged();
+            }
         }
         #endregion
 
