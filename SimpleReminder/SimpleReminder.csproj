@@ -74,11 +74,13 @@
     <Compile Include="Screens\RegisterScreen.xaml.cs">
       <DependentUpon>RegisterScreen.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tools\Delegates.cs" />
     <Compile Include="Tools\ILoaderOwner.cs" />
     <Compile Include="Tools\IScreen.cs" />
     <Compile Include="ViewModels\EditorViewModel.cs" />
     <Compile Include="ViewModels\LoaderViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\NotificationViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Page Include="Screens\LoginScreen.xaml">
       <SubType>Designer</SubType>

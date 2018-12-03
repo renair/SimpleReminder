@@ -2,10 +2,13 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using DataStorage.Models;
 using SimpleReminder.Controlls;
 using SimpleReminder.Managers;
+using SimpleReminder.Screens;
 using Tools;
 
 namespace SimpleReminder.ViewModels
@@ -13,26 +16,17 @@ namespace SimpleReminder.ViewModels
     class MainViewModel : INotifyPropertyChanged
     {
         #region Fields
-        private ObservableCollection<NotificationControl> _notifications;
-        private bool _isEditorVisible;
+        private UIElementCollection _notifications;
+        private Visibility _editorVisibility = Visibility.Hidden;
         private ReminderData _editedValue;
-        
-        public ObservableCollection<NotificationControl> Notifications
-        {
-            get { return _notifications; }
-            private set
-            {
-                _notifications = value;
-                OnPropertyChanged();
-            }
-        }
+        private NotificationScreen _editorUi;
 
-        public bool IsEditorVisible
+        public Visibility EditorVisibility
         {
-            get { return _isEditorVisible; }
+            get { return _editorVisibility; }
             set
             {
-                _isEditorVisible = value;
+                _editorVisibility = value;
                 OnPropertyChanged();
             }
         }
@@ -45,6 +39,11 @@ namespace SimpleReminder.ViewModels
                 _editedValue = value;
                 OnPropertyChanged();
             }
+        }
+
+        public NotificationScreen EditorUi
+        {
+            get { return _editorUi ?? (_editorUi = new NotificationScreen()); }
         }
         #endregion
 
@@ -70,13 +69,40 @@ namespace SimpleReminder.ViewModels
         #endregion
 
         #region Methods
+
+        public MainViewModel(UIElementCollection notificationCollection)
+        {
+            _notifications = notificationCollection;
+            FillNotifications();
+        }
+
         private void FillNotifications()
         {
-            _notifications = new ObservableCollection<NotificationControl>();
+            _notifications.Clear();
             foreach (var notification in AccountManager.CurrentUser.Notifications)
             {
-                _notifications.Add(new NotificationControl(notification));
+                NotificationControl ctrl = new NotificationControl(notification);
+                NotificationViewModel nvm = new NotificationViewModel(notification);
+                nvm.OnRequireConfiguration += OpenEditor;
+                nvm.OnRequireDeletion += RemoveReminding;
+                ctrl.DataContext = nvm;
+                _notifications.Add(ctrl);
             }
+        }
+
+        private void OpenEditor(ReminderData data)
+        {
+            EditorVisibility = Visibility.Visible;
+            //EditedValue = data;
+            EditorUi.DataContext = new EditorViewModel(data);
+        }
+
+        private async void RemoveReminding(ReminderData data)
+        {
+            LoaderManager.ShowLoader();
+            await AccountManager.DeleteReminding(data);
+            FillNotifications();
+            LoaderManager.HideLoader();
         }
         #endregion
 

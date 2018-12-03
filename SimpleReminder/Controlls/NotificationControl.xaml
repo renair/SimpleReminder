@@ -10,11 +10,9 @@
     <Grid>
         <!-- Put Button to base Grid. When user click - Button will produce
              event to open editing screen -->
-        <Button Grid.Column="0" Grid.Row="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="Transparent"
-                Name="MainButton" Click="MainButtonClick"
-                MouseDown="MainButtonMouseDown"> <!-- Test case, using to emulate situation when time has come. -->
+        <Button Grid.Column="0" Grid.Row="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="{Binding Color}"
+             Command="{Binding RequireConfigutationCommand}">
             <Grid>
-                <!-- Grid where information about notification will display -->
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0.1*"/>
                     <RowDefinition Height="*"/>
@@ -31,12 +29,11 @@
                     <ColumnDefinition Width="0.6*"/>
                     <ColumnDefinition Width="0.03*"/>
                 </Grid.ColumnDefinitions>
-                <!-- Notification elements definition -->
-                <Label Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="35" FontWeight="DemiBold" x:FieldModifier="private" Name="DateLabel" Content="27/01/2020"/>
-                <Label Grid.Column="3" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="35" FontWeight="DemiBold" x:FieldModifier="private" Name="HoursLabel" Content="00"/>
+                <Label Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="35" FontWeight="DemiBold" Content="{Binding Date, Mode=OneWay}"/>
+                <Label Grid.Column="3" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="35" FontWeight="DemiBold" Content="{Binding Hours, Mode=OneWay}"/>
                 <Label Grid.Column="4" Grid.Row="1" Content=":" Margin="0,-7,0,0" FontSize="35" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <Label Grid.Column="5" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="35" FontWeight="DemiBold" x:FieldModifier="private" Name="MinutesLabel" Content="00"/>
-                <TextBox Grid.Column="7" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:FieldModifier="private" Name="NotificationMessage" VerticalScrollBarVisibility="Auto"
+                <Label Grid.Column="5" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" FontSize="35" FontWeight="DemiBold" Content="{Binding Minutes, Mode=OneWay}"/>
+                <TextBox Grid.Column="7" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalScrollBarVisibility="Auto" Text="{Binding Text, Mode=OneWay}" 
                  TextWrapping="Wrap" AcceptsReturn="True" FontSize="20" IsReadOnly="True"/>
             </Grid>
         </Button>

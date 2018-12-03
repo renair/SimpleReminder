@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using DataStorage.Models;
+using SimpleReminder.ViewModels;
 
 namespace SimpleReminder.Controlls
 {
@@ -39,49 +40,50 @@ namespace SimpleReminder.Controlls
         public NotificationControl(ReminderData data)
         {
             InitializeComponent();
-            _reminderData = data;
-            // Display data on object initialization.
-            DisplayDate();
+            DataContext = new NotificationViewModel(data);
+            //_reminderData = data;
+            //// Display data on object initialization.
+            //DisplayDate();
         }
 
         public void DisplayDate()
         {
-            DateTime t = _reminderData.SelectedDate;
-            DateLabel.Content = t.ToShortDateString();
-            HoursLabel.Content = t.Hour.ToString().PadLeft(2, '0');
-            MinutesLabel.Content = t.Minute.ToString().PadLeft(2, '0');
-            NotificationMessage.Text = _reminderData.ReminderText;
-            Update();
+            //DateTime t = _reminderData.SelectedDate;
+            //DateLabel.Content = t.ToShortDateString();
+            //HoursLabel.Content = t.Hour.ToString().PadLeft(2, '0');
+            //MinutesLabel.Content = t.Minute.ToString().PadLeft(2, '0');
+            //NotificationMessage.Text = _reminderData.ReminderText;
+            //Update();
         }
         
         public void Update()
         {
-            // This method will work only if notification just became outdated
-            // Checking brush color do as marker is outdated event already invoked
-            // and to make oudated event red.
-            if(_reminderData.IsTimeCome() && MainButton.Background != Brushes.Red)
-            {
-                MainButton.Background = Brushes.Red;
-                NotificationOutdated?.Invoke(this);
-            }
-            // If we edit notification when it already outdated we will change
-            // data in it, so we needto be able to change notification status
-            else if(!_reminderData.IsTimeCome())
-            {
-                MainButton.Background = Brushes.White;
-            }
+            //// This method will work only if notification just became outdated
+            //// Checking brush color do as marker is outdated event already invoked
+            //// and to make oudated event red.
+            //if(_reminderData.IsTimeCome() && MainButton.Background != Brushes.Red)
+            //{
+            //    MainButton.Background = Brushes.Red;
+            //    NotificationOutdated?.Invoke(this);
+            //}
+            //// If we edit notification when it already outdated we will change
+            //// data in it, so we needto be able to change notification status
+            //else if(!_reminderData.IsTimeCome())
+            //{
+            //    MainButton.Background = Brushes.White;
+            //}
         }
 
         private void MainButtonClick(object sender, RoutedEventArgs e)
         {
-            // Check is reminder is outdated and it it is - invoke ReadyToRemove
-            // in other way - it requre settings for this reminder.
-            if(_reminderData.IsTimeCome())
-            {
-                ReadyToRemove?.Invoke(this);
-                return;
-            }
-            RequiringSettings?.Invoke(_reminderData);
+            //// Check is reminder is outdated and it it is - invoke ReadyToRemove
+            //// in other way - it requre settings for this reminder.
+            //if(_reminderData.IsTimeCome())
+            //{
+            //    ReadyToRemove?.Invoke(this);
+            //    return;
+            //}
+            //RequiringSettings?.Invoke(_reminderData);
         }
 
         // TODO Remove method
@@ -89,12 +91,12 @@ namespace SimpleReminder.Controlls
         // and it immediately became oudated.
         private void MainButtonMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if(e.RightButton.HasFlag(MouseButtonState.Pressed))
-            {
-                _reminderData.SelectedDate = DateTime.Now;
-                DisplayDate();
-            }
-            e.Handled = true;
+            //if(e.RightButton.HasFlag(MouseButtonState.Pressed))
+            //{
+            //    _reminderData.SelectedDate = DateTime.Now;
+            //    DisplayDate();
+            //}
+            //e.Handled = true;
         }
     }
 }
