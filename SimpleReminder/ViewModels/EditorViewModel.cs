@@ -90,9 +90,9 @@ namespace SimpleReminder.ViewModels
         public EditorViewModel(ReminderData data)
         {
             _editedValue = data;
-            SelectedDate = data.SelectedDate;
-            Minutes = data.SelectedDate.Hour;
-            Hours = data.SelectedDate.Minute;
+            _selectedDate = data.SelectedDate;
+            _hours = data.SelectedDate.Hour;
+            _minutes = data.SelectedDate.Minute;
         }
 
         private void BuildNewDate()

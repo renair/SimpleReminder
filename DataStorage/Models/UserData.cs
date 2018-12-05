@@ -8,6 +8,7 @@ namespace DataStorage.Models
     [Serializable]
     public class UserData
     {
+        private List<ReminderData> _notifications;
         public Int64 Id { get; internal set; }
 
         public string Surname { get; set; }
@@ -28,7 +29,16 @@ namespace DataStorage.Models
 
         public DateTime LastLogin { get; set; }
 
-        public List<ReminderData> Notifications { get; set; }
+        public List<ReminderData> Notifications
+        {
+            get
+            {
+
+                _notifications.Sort((a, b) => a.SelectedDate.CompareTo(b.SelectedDate));
+                return _notifications;
+            }
+            set { _notifications = value; }
+        }
 
         public string Email { get; set; }
 

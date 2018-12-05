@@ -39,7 +39,6 @@ namespace DataStorage.Models
         {
             SelectedDate = DateTime.Now;
             User = user;
-            user.Notifications.Add(this);
         }
 
         public int CompareTo(object obj)

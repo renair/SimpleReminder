@@ -67,7 +67,7 @@ namespace SimpleReminder.ViewModels
             }
         }
 
-        private void FillNotifications()
+        internal void FillNotifications()
         {
             _notifications.Clear();
             foreach (var notification in AccountManager.CurrentUser.Notifications)
@@ -128,13 +128,13 @@ namespace SimpleReminder.ViewModels
             await AccountManager.AddReminding(data);
             LoaderManager.HideLoader();
 
-            AddNotificationToUi(data);
+            FillNotifications();
         }
 
         private async void LogOut(object arg)
         {
             await AccountManager.LogOut();
-            NavigationManager.Navigate(Managers.Screens.Main);
+            NavigationManager.Navigate(Managers.Screens.SignIn);
         }
         #endregion
 

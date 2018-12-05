@@ -102,7 +102,6 @@ namespace SimpleReminder.Managers
             return Task.Run(() =>
             {
                 _currentUser.Notifications.Add(data);
-                _currentUser.Notifications.Sort((a,b) => a.SelectedDate.CompareTo(b));
                 return _dataAccessor.AddNotification(data);
             });
         }

@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Threading;
-using System.Linq;
 using DataStorage.Models;
 using SimpleReminder.Controlls;
-using SimpleReminder.Managers;
-using Tools;
 using SimpleReminder.Tools;
 using SimpleReminder.ViewModels;
 
@@ -21,11 +15,13 @@ namespace SimpleReminder.Screens
         //private Dictionary<ReminderData, NotificationControl> _remindings = new Dictionary<ReminderData, NotificationControl>();
         //private DispatcherTimer _timer;
 
+        private MainViewModel _mvm;
+
         public MainScreen()
         {
             InitializeComponent();
-            MainViewModel mvm = new MainViewModel(NotificationsContainer.Children);
-            DataContext = mvm;
+            _mvm = new MainViewModel(NotificationsContainer.Children);
+            DataContext = _mvm;
         }
 
         private void TimerTicked(object sender, EventArgs e)
@@ -45,6 +41,7 @@ namespace SimpleReminder.Screens
 
         public void NavigatedTo()
         {
+            _mvm.FillNotifications();
             //// Setup Timer to update controls
             //_timer = new DispatcherTimer
             //{
@@ -95,7 +92,7 @@ namespace SimpleReminder.Screens
             //RedrawRemindings();
         }
 
-        private async void AddButtonClick(object sender, RoutedEventArgs e)
+        private void AddButtonClick(object sender, RoutedEventArgs e)
         {
             //// Configure empty ReminderData
             //ReminderData data = new ReminderData(AccountManager.CurrentUser);
@@ -142,7 +139,7 @@ namespace SimpleReminder.Screens
             //}
         }
 
-        private async void OnReadyToRemove(NotificationControl ctrl)
+        private void OnReadyToRemove(NotificationControl ctrl)
         {
             //try
             //{
@@ -190,7 +187,7 @@ namespace SimpleReminder.Screens
             //NotificationEditorContentControll.Content = editor;
         }
 
-        private async void OnNotificationEdited(ReminderData data)
+        private void OnNotificationEdited(ReminderData data)
         {
             //// Move NotificationEditor behind all notifications
             //Panel.SetZIndex(NotificationEditor, -1);
@@ -206,7 +203,7 @@ namespace SimpleReminder.Screens
             //RedrawRemindings();
         }
 
-        private async void OnNotificationRemoved(ReminderData data)
+        private void OnNotificationRemoved(ReminderData data)
         {
             //// Move NotificationEditor behind all notifications
             //Panel.SetZIndex(NotificationEditor, -1);
