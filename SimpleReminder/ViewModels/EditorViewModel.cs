@@ -1,7 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using DataStorage.Models;
+using SimpleReminder.Tools;
+using Tools;
 
 namespace SimpleReminder.ViewModels
 {
@@ -9,10 +12,10 @@ namespace SimpleReminder.ViewModels
     {
         #region Fields
 
+        private ReminderData _editedValue;
         private DateTime _selectedDate;
         private int _hours;
         private int _minutes;
-        private string _reminderText;
 
         public DateTime SelectedDate
         {
@@ -20,8 +23,7 @@ namespace SimpleReminder.ViewModels
             set
             {
                 _selectedDate = value;
-                _hours = value.Hour;
-                _minutes = value.Minute;
+                BuildNewDate();
                 OnPropertyChanged();
             }
         }
@@ -32,6 +34,7 @@ namespace SimpleReminder.ViewModels
             set
             {
                 _hours = value;
+                BuildNewDate();
                 OnPropertyChanged();
             }
         }
@@ -42,17 +45,43 @@ namespace SimpleReminder.ViewModels
             set
             {
                 _minutes = value;
+                BuildNewDate();
                 OnPropertyChanged();
             }
         }
 
         public string ReminderText
         {
-            get { return _reminderText; }
+            get { return _editedValue.ReminderText; }
             set
             {
-                _reminderText = value;
+                _editedValue.ReminderText = value;
                 OnPropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region Commands
+
+        private ICommand _saveCommand;
+        private ICommand _deleteCommand;
+
+        public ICommand SaveCommand
+        {
+            get
+            {
+                return _saveCommand ??
+                       (_saveCommand = new RelayCommand<object>(Save, CanSave));
+            }
+        }
+
+        public ICommand DeleteCommand
+        {
+            get
+            {
+                return _deleteCommand ??
+                       (_deleteCommand = new RelayCommand<object>(Delete));
             }
         }
 
@@ -60,12 +89,41 @@ namespace SimpleReminder.ViewModels
 
         public EditorViewModel(ReminderData data)
         {
+            _editedValue = data;
             SelectedDate = data.SelectedDate;
-            ReminderText = data.ReminderText;
+            Minutes = data.SelectedDate.Hour;
+            Hours = data.SelectedDate.Minute;
         }
 
+        private void BuildNewDate()
+        {
+            _editedValue.SelectedDate = new DateTime(_selectedDate.Year, _selectedDate.Month, _selectedDate.Day, _hours, _minutes, 0);
+        }
+
+        #region Command Implementation
+
+        private void Save(object arg)
+        {
+            OnSaveRequire?.Invoke(_editedValue);
+        }
+
+        private bool CanSave(object arg)
+        {
+            return _editedValue.SelectedDate > DateTime.Now;
+        }
+
+        private void Delete(object arg)
+        {
+            OnDeleteRequire?.Invoke(_editedValue);
+        }
+
+        #endregion
+
+        public event Delegates.ActionWithReminderRequired OnSaveRequire;
+        public event Delegates.ActionWithReminderRequired OnDeleteRequire;
+
         public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

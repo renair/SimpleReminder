@@ -1,6 +1,5 @@
-﻿using System.Windows;
-using SimpleReminder.Managers;
-using SimpleReminder.Tools;
+﻿using SimpleReminder.Tools;
+using SimpleReminder.ViewModels;
 
 namespace SimpleReminder.Screens
 {
@@ -10,35 +9,10 @@ namespace SimpleReminder.Screens
         public LoginScreen()
         {
             InitializeComponent();
+            DataContext = new LoginViewModel();
         }
 
-        private async void loginButton_Click(object sender, RoutedEventArgs e)
-        {
-            LoaderManager.ShowLoader();
-            var isLoggedIn = await AccountManager.SignIn(loginBox.Text, passwordBox.Password);
-            LoaderManager.HideLoader();
-
-            // If user exists and password is correct
-            if (isLoggedIn)
-            {
-                NavigationManager.Navigate(Managers.Screens.Main);
-            }
-            else
-            {
-                MessageBox.Show("Can't login to account.");
-            }
-        }
-
-        private void registerButton_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationManager.Navigate(Managers.Screens.SignUp);
-        }
-
-        public void NavigatedTo()
-        {
-            loginBox.Text = "";
-            passwordBox.Password = "";
-        }
+        public void NavigatedTo(){}
 
         public void NavigatedFrom(){}
     }

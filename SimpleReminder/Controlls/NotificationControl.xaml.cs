@@ -37,10 +37,9 @@ namespace SimpleReminder.Controlls
             }
         }
 
-        public NotificationControl(ReminderData data)
+        public NotificationControl()
         {
             InitializeComponent();
-            DataContext = new NotificationViewModel(data);
             //_reminderData = data;
             //// Display data on object initialization.
             //DisplayDate();

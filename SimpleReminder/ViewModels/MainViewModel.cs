@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
@@ -18,7 +17,6 @@ namespace SimpleReminder.ViewModels
         #region Fields
         private UIElementCollection _notifications;
         private Visibility _editorVisibility = Visibility.Hidden;
-        private ReminderData _editedValue;
         private NotificationScreen _editorUi;
 
         public Visibility EditorVisibility
@@ -27,16 +25,6 @@ namespace SimpleReminder.ViewModels
             set
             {
                 _editorVisibility = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public ReminderData EditedValue
-        {
-            get { return _editedValue; }
-            set
-            {
-                _editedValue = value;
                 OnPropertyChanged();
             }
         }
@@ -73,7 +61,10 @@ namespace SimpleReminder.ViewModels
         public MainViewModel(UIElementCollection notificationCollection)
         {
             _notifications = notificationCollection;
-            FillNotifications();
+            if(AccountManager.CurrentUser != null)
+            {
+                FillNotifications();
+            }
         }
 
         private void FillNotifications()
@@ -81,20 +72,27 @@ namespace SimpleReminder.ViewModels
             _notifications.Clear();
             foreach (var notification in AccountManager.CurrentUser.Notifications)
             {
-                NotificationControl ctrl = new NotificationControl(notification);
-                NotificationViewModel nvm = new NotificationViewModel(notification);
-                nvm.OnRequireConfiguration += OpenEditor;
-                nvm.OnRequireDeletion += RemoveReminding;
-                ctrl.DataContext = nvm;
-                _notifications.Add(ctrl);
+                AddNotificationToUi(notification);
             }
+        }
+
+        private void AddNotificationToUi(ReminderData notification)
+        {
+            NotificationControl ctrl = new NotificationControl();
+            NotificationViewModel nvm = new NotificationViewModel(notification);
+            nvm.OnRequireConfiguration += OpenEditor;
+            nvm.OnRequireDeletion += RemoveReminding;
+            ctrl.DataContext = nvm;
+            _notifications.Add(ctrl);
         }
 
         private void OpenEditor(ReminderData data)
         {
             EditorVisibility = Visibility.Visible;
-            //EditedValue = data;
-            EditorUi.DataContext = new EditorViewModel(data);
+            EditorViewModel evm = new EditorViewModel(data);
+            evm.OnDeleteRequire += RemoveReminding;
+            evm.OnSaveRequire += ChangeNotification;
+            EditorUi.DataContext = evm;
         }
 
         private async void RemoveReminding(ReminderData data)
@@ -103,6 +101,17 @@ namespace SimpleReminder.ViewModels
             await AccountManager.DeleteReminding(data);
             FillNotifications();
             LoaderManager.HideLoader();
+            EditorVisibility = Visibility.Hidden;
+        }
+
+        private async void ChangeNotification(ReminderData data)
+        {
+            LoaderManager.ShowLoader();
+            await AccountManager.UpdateReminding(data);
+            //TODO optimize
+            FillNotifications();
+            LoaderManager.HideLoader();
+            EditorVisibility = Visibility.Hidden;
         }
         #endregion
 
@@ -119,13 +128,13 @@ namespace SimpleReminder.ViewModels
             await AccountManager.AddReminding(data);
             LoaderManager.HideLoader();
 
-            NotificationControl ctrl = new NotificationControl(data);
-            _notifications.Add(ctrl);
+            AddNotificationToUi(data);
         }
 
         private async void LogOut(object arg)
         {
             await AccountManager.LogOut();
+            NavigationManager.Navigate(Managers.Screens.Main);
         }
         #endregion
 

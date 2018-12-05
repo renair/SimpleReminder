@@ -99,8 +99,12 @@ namespace SimpleReminder.Managers
         // Simulate REST api call
         public static Task<bool> AddReminding(ReminderData data)
         {
-            _currentUser.Notifications.Add(data);
-            return Task.Run(() => _dataAccessor.AddNotification(data));
+            return Task.Run(() =>
+            {
+                _currentUser.Notifications.Add(data);
+                _currentUser.Notifications.Sort((a,b) => a.SelectedDate.CompareTo(b));
+                return _dataAccessor.AddNotification(data);
+            });
         }
 
         // Simulate REST api call
