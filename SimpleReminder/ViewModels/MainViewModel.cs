@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -61,10 +62,10 @@ namespace SimpleReminder.ViewModels
         public MainViewModel(UIElementCollection notificationCollection)
         {
             _notifications = notificationCollection;
-            if(AccountManager.CurrentUser != null)
-            {
-                FillNotifications();
-            }
+            //if(AccountManager.CurrentUser != null)
+            //{
+            //    FillNotifications();
+            //}
         }
 
         internal void FillNotifications()
@@ -126,9 +127,8 @@ namespace SimpleReminder.ViewModels
 
             LoaderManager.ShowLoader();
             await AccountManager.AddReminding(data);
-            LoaderManager.HideLoader();
-
             FillNotifications();
+            LoaderManager.HideLoader();
         }
 
         private async void LogOut(object arg)

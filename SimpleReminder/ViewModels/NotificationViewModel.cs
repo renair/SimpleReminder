@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
 using DataStorage.Models;
@@ -69,6 +70,14 @@ namespace SimpleReminder.ViewModels
         public NotificationViewModel(ReminderData data)
         {
             ContainedData = data;
+            if (!data.IsTimeCome())
+            {
+                // This will trigger property changed and UI will update
+                // and update notification color.
+
+                // ReSharper disable once ExplicitCallerInfoArgument
+                Task.Delay(data.SelectedDate - DateTime.Now).ContinueWith(task => OnPropertyChanged("Color"));
+            }
         }
 
         private void RequireConfigurationInvoker(object obj)
@@ -85,7 +94,7 @@ namespace SimpleReminder.ViewModels
         public event Delegates.ActionWithReminderRequired OnRequireDeletion;
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
