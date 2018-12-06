@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data.Entity.ModelConfiguration;
 
 namespace DataStorage.Models
 {
@@ -9,7 +8,7 @@ namespace DataStorage.Models
         private UserData _user;
 
         // Properties for private fields
-        public long Id { get; internal set; }
+        public long Id { get; private set; }
 
         public DateTime SelectedDate { get; set; }
 
@@ -35,8 +34,9 @@ namespace DataStorage.Models
         {}
 
         // Make initialization safe using without NullReferenceException.
-        public ReminderData(UserData user)
+        public ReminderData(UserData user, Int64 id = 0)
         {
+            Id = id;
             SelectedDate = DateTime.Now;
             User = user;
         }
@@ -54,28 +54,6 @@ namespace DataStorage.Models
         public bool IsTimeCome()
         {
             return SelectedDate <= DateTime.Now;
-        }
-    }
-
-    internal class ReminderEntityConfiguration : EntityTypeConfiguration<ReminderData>
-    {
-        public ReminderEntityConfiguration()
-        {
-            ToTable("Remindings");
-            HasKey(r => r.Id);
-
-            Property(r => r.Id)
-                .HasColumnName("Id")
-                .IsRequired();
-            Property(r => r.ReminderText)
-                .HasColumnName("NotificationText")
-                .IsRequired();
-            Property(r => r.SelectedDate)
-                .HasColumnName("SelectedDate")
-                .IsRequired();
-            Property(r => r.UserId)
-                .HasColumnName("UserId")
-                .IsRequired();
         }
     }
 }

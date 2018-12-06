@@ -112,6 +112,13 @@ namespace SimpleReminder.ViewModels
                     MessageBox.Show("Can't register new user. Login already taken or server unavailable.");
                     throw new Exception("Can't register new user. Login already taken or server unavailable.");
                 }
+                //Clear inputs
+                Login = "";
+                Password = "";
+                Name = "";
+                Surname = "";
+                Email = "";
+                // Go to main screen
                 NavigationManager.Navigate(Managers.Screens.Main);
             }
             catch (Exception e)

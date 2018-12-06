@@ -73,7 +73,7 @@ namespace SimpleReminder.ViewModels
             if (!data.IsTimeCome())
             {
                 // This will trigger property changed and UI will update
-                // and update notification color.
+                // notification color.
 
                 // ReSharper disable once ExplicitCallerInfoArgument
                 Task.Delay(data.SelectedDate - DateTime.Now).ContinueWith(task => OnPropertyChanged("Color"));

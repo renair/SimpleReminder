@@ -60,8 +60,8 @@ namespace DataStorage.DataAccess
                     Logger.Log("Call 'register' endpoint unsuccesfull");
                     return null;
                 }
-                userData.Id = response.Content.ReadAsAsync<int>().GetAwaiter().GetResult();
-                return userData;
+                dto.Id = response.Content.ReadAsAsync<int>().GetAwaiter().GetResult();
+                return dto.ToUserData();
             }
             catch (Exception e)
             {
@@ -96,7 +96,7 @@ namespace DataStorage.DataAccess
             return null;
         }
 
-        public bool AddNotification(ReminderData data)
+        public ReminderData AddNotification(ReminderData data)
         {
             try
             {
@@ -105,15 +105,15 @@ namespace DataStorage.DataAccess
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
                     Logger.Log("Call 'add_notification' endpoint unsuccesfull");
-                    return false;
+                    return null;
                 }
-                data.Id = response.Content.ReadAsAsync<int>().GetAwaiter().GetResult();
-                return true;
+                dto.Id = response.Content.ReadAsAsync<int>().GetAwaiter().GetResult();
+                return dto.ToReminderData();
             }
             catch (Exception e)
             {
                 Logger.Log("Can't sent add notification request", e);
-                return false;
+                return null;
             }
         }
 
@@ -187,9 +187,8 @@ namespace DataStorage.DataAccess
 
             public ReminderData ToReminderData()
             {
-                ReminderData data = new ReminderData()
+                ReminderData data = new ReminderData(null, Id)
                 {
-                    Id = Id,
                     SelectedDate = UnixEpoch.Add(TimeSpan.FromSeconds(UnixSelectedDate)),
                     ReminderText = ReminderText,
                     UserId = UserId
@@ -233,9 +232,8 @@ namespace DataStorage.DataAccess
 
             public UserData ToUserData()
             {
-                UserData data = new UserData()
+                UserData data = new UserData(Id)
                 {
-                    Id = Id,
                     Surname = Surname,
                     Name = Name,
                     Login = Login,

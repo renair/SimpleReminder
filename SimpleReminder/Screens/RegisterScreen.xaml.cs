@@ -27,11 +27,7 @@ namespace SimpleReminder.Screens
 
         public void NavigatedTo()
         {
-            LoginBox.Text = "";
             PasswordBox.Password = "";
-            FirstNameBox.Text = "";
-            LastNameBox.Text = "";
-            EmailBox.Text = "";
         }
 
         public void NavigatedFrom()

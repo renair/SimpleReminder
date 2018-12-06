@@ -29,7 +29,7 @@
         </Grid.ColumnDefinitions>
         <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Content="Simple Reminder" FontSize="38" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <Label Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Content="Login:" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <TextBox Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding Login, Mode=OneWayToSource}" FontSize="32" VerticalAlignment="Center"/>
+        <TextBox Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="2" Text="{Binding Login, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" FontSize="32" VerticalAlignment="Center"/>
         <Label Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" Content="Password:" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Right"/>
         <PasswordBox Grid.Column="2" Grid.Row="5" Grid.ColumnSpan="2" Name="Password" FontSize="32" VerticalAlignment="Center"/>
         <Button Grid.Column="2" Grid.Row="7" Content="Login" FontSize="26" FontWeight="DemiBold" Command="{Binding LoginCommand}"  CommandParameter="{Binding ElementName=Password}"/>

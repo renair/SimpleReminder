@@ -61,10 +61,6 @@ namespace SimpleReminder.ViewModels
         public MainViewModel(UIElementCollection notificationCollection)
         {
             _notifications = notificationCollection;
-            //if(AccountManager.CurrentUser != null)
-            //{
-            //    FillNotifications();
-            //}
         }
 
         internal void FillNotifications()

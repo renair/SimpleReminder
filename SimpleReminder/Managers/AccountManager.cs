@@ -95,25 +95,26 @@ namespace SimpleReminder.Managers
         {
             return Task.Run(() => { CurrentUser = null; });
         }
-
-        // Simulate REST api call
-        public static Task<bool> AddReminding(ReminderData data)
+        
+        public static Task<ReminderData> AddReminding(ReminderData data)
         {
             return Task.Run(() =>
             {
-                _currentUser.Notifications.Add(data);
-                return _dataAccessor.AddNotification(data);
+                ReminderData result = _dataAccessor.AddNotification(data);
+                if(result != null)
+                {
+                    _currentUser.Notifications.Add(result);
+                }
+                return result;
             });
         }
-
-        // Simulate REST api call
+        
         public static Task<bool> DeleteReminding(ReminderData data)
         {
             _currentUser.Notifications.Remove(data);
             return Task.Run(() => _dataAccessor.RemoveNotification(data));
         }
-
-        // Simulate REST api call
+        
         public static Task<bool> UpdateReminding(ReminderData data)
         {
             return Task.Run(() => _dataAccessor.UpdateNotification(data));

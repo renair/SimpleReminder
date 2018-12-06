@@ -51,12 +51,6 @@ namespace SimpleReminder.ViewModels
 
         #endregion
 
-        #region Methods
-
-
-
-        #endregion
-
         #region Command implementation
 
         private async void LoginCommandImpl(object arg)
@@ -74,6 +68,9 @@ namespace SimpleReminder.ViewModels
             if (isLoggedIn)
             {
                 NavigationManager.Navigate(Managers.Screens.Main);
+                // Clear fields if success
+                Login = "";
+                passBox.Password = "";
             }
             else
             {

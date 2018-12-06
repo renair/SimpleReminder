@@ -29,15 +29,15 @@
         <Label Grid.Row="4" Grid.Column="0" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" 
                Content="Email" FontWeight="DemiBold" FontSize="30"/>
         <TextBox Grid.Row="0" Grid.Column="1"  Text="{Binding Login, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-               Margin="10" FontSize="30" Name="LoginBox"/>
+               Margin="10" FontSize="30"/>
         <PasswordBox Grid.Row="1" Grid.Column="1"  PasswordChanged="PasswordBoxChanged"
                Margin="10"  FontSize="30" Name="PasswordBox"/>
         <TextBox Grid.Row="2" Grid.Column="1"  Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-               Margin="10"  FontSize="30" Name="FirstNameBox"/>
+               Margin="10"  FontSize="30"/>
         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Surname, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-               Margin="10"  FontSize="30" Name="LastNameBox"/>
+               Margin="10"  FontSize="30"/>
         <TextBox Grid.Row="4" Grid.Column="1"  Text="{Binding Email, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-               Margin="10"  FontSize="30" Name="EmailBox"/>
+               Margin="10"  FontSize="30"/>
         <Button Grid.Row="5" Grid.Column="0" Content="Cancel" HorizontalAlignment="Center" VerticalAlignment="Center"
                 Width="125" Command="{Binding BackToLogInCommand}"  FontSize="30" FontWeight="DemiBold"/>
         <Button Grid.Row="5" Grid.Column="1" Content="Register" HorizontalAlignment="Center" VerticalAlignment="Center"
