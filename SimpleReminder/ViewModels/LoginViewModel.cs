@@ -53,8 +53,7 @@ namespace SimpleReminder.ViewModels
 
         #region Methods
 
-        public LoginViewModel()
-        {}
+
 
         #endregion
 

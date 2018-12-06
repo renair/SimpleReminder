@@ -13,8 +13,6 @@ namespace Tools
 
         public static readonly string LogFilepath = Path.Combine(LogFolderPath, "Log_" + DateTime.Now.ToShortDateString() + ".txt");
 
-        public static readonly string StorageFilePath = Path.Combine(ClientFolderPath, "DataStorage.bin");
-
         public static readonly string LastUserFilePath = Path.Combine(ClientFolderPath, "LastUser.bin");
 
         public static void CheckAndCreateFile(string filePath)
@@ -31,6 +29,7 @@ namespace Tools
                     file.Create().Close();
                 }
             }
+            // ReSharper disable once RedundantCatchClause
             catch (Exception)
             {
                 throw;
