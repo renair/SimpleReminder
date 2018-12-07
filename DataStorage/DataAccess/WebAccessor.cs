@@ -22,7 +22,7 @@ namespace DataStorage.DataAccess
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        // Check if thre is account with given login and password
+        // Check if there is account with given login and password
         public UserData SignIn(string login, string passwd)
         {
             var authData = new

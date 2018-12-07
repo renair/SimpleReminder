@@ -6,8 +6,7 @@ namespace DataStorage.Models
     public class ReminderData : IComparable
     {
         private UserData _user;
-
-        // Properties for private fields
+        
         public long Id { get; private set; }
 
         public DateTime SelectedDate { get; set; }
@@ -28,12 +27,7 @@ namespace DataStorage.Models
                 }
             }
         }
-
-        //This constructor will be used by EF
-        public ReminderData()
-        {}
-
-        // Make initialization safe using without NullReferenceException.
+        
         public ReminderData(UserData user, Int64 id = 0)
         {
             Id = id;
